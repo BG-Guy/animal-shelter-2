@@ -1,0 +1,68 @@
+/* Corkboard pet card: a wooden frame around a speckled cork texture,
+   with a "photo" pinned to it. Used for the adoptable-pets grid. */
+
+@layer components {
+  .cork-card {
+    --tilt: 0deg;
+    position: relative;
+    transform: rotate(var(--tilt));
+    border-radius: 1.25rem;
+    padding: 0.55rem;
+    background: linear-gradient(160deg, var(--color-frame), var(--color-frame-dark));
+    box-shadow: var(--shadow-soft);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+
+  .cork-card:hover,
+  .cork-card:focus-within {
+    transform: rotate(0deg) scale(1.035);
+    box-shadow: 0 16px 32px -10px rgba(74, 45, 25, 0.45);
+  }
+
+  .cork-card-board {
+    position: relative;
+    border-radius: 0.85rem;
+    padding: 1.75rem 1.1rem 1.1rem;
+    background-color: var(--color-cork);
+    background-image: radial-gradient(circle at 15% 20%, rgba(255, 255, 255, 0.12) 0, transparent 3px),
+      radial-gradient(circle at 82% 12%, rgba(0, 0, 0, 0.14) 0, transparent 2.5px),
+      radial-gradient(circle at 40% 55%, rgba(0, 0, 0, 0.12) 0, transparent 2px),
+      radial-gradient(circle at 68% 78%, rgba(255, 255, 255, 0.1) 0, transparent 2.5px),
+      radial-gradient(circle at 22% 85%, rgba(0, 0, 0, 0.12) 0, transparent 2px),
+      radial-gradient(circle at 90% 55%, rgba(0, 0, 0, 0.1) 0, transparent 2px),
+      radial-gradient(circle at 55% 30%, rgba(0, 0, 0, 0.08) 0, transparent 1.5px);
+    box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.25);
+  }
+
+  .cork-pin {
+    position: absolute;
+    top: -8px;
+    left: 50%;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    transform: translateX(-50%);
+    background: radial-gradient(circle at 32% 28%, #fff, var(--color-pin) 55%, rgba(0, 0, 0, 0.45) 100%);
+    box-shadow: 0 3px 4px rgba(0, 0, 0, 0.45);
+    z-index: 2;
+  }
+
+  .cork-photo {
+    display: block;
+    width: fit-content;
+    margin: 0 auto 1rem;
+    background: #fff;
+    padding: 0.5rem 0.5rem 1.1rem;
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.3);
+  }
+
+  .cork-photo-frame {
+    width: 84px;
+    height: 84px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    background: rgb(var(--color-bg));
+  }
+}

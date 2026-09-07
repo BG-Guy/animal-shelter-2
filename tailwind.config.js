@@ -25,16 +25,19 @@ module.exports = {
       colors: {
         // Live site tokens, backed by CSS variables so the whole theme is swappable from one file.
         brand: {
-          bg: "var(--color-bg)",
-          surface: "var(--color-surface)",
-          primary: "var(--color-primary)",
-          "primary-contrast": "var(--color-primary-contrast)",
-          secondary: "var(--color-secondary)",
-          "secondary-contrast": "var(--color-secondary-contrast)",
-          accent: "var(--color-accent)",
-          "accent-contrast": "var(--color-accent-contrast)",
-          text: "var(--color-text)",
-          "text-muted": "var(--color-text-muted)",
+          // rgb(var(--x) / <alpha-value>) lets Tailwind fill in opacity
+          // modifiers (bg-brand-bg/90, text-brand-text/60, ...); tokens.css
+          // stores these as unitless "R G B" triples to support it.
+          bg: "rgb(var(--color-bg) / <alpha-value>)",
+          surface: "rgb(var(--color-surface) / <alpha-value>)",
+          primary: "rgb(var(--color-primary) / <alpha-value>)",
+          "primary-contrast": "rgb(var(--color-primary-contrast) / <alpha-value>)",
+          secondary: "rgb(var(--color-secondary) / <alpha-value>)",
+          "secondary-contrast": "rgb(var(--color-secondary-contrast) / <alpha-value>)",
+          accent: "rgb(var(--color-accent) / <alpha-value>)",
+          "accent-contrast": "rgb(var(--color-accent-contrast) / <alpha-value>)",
+          text: "rgb(var(--color-text) / <alpha-value>)",
+          "text-muted": "rgb(var(--color-text-muted) / <alpha-value>)",
           border: "var(--color-border)",
         },
 

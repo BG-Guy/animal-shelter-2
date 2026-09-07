@@ -5,18 +5,28 @@
   tailwind.config.js reads colors/fonts through these variables.
 */
 :root {
-  /* Palette: Golden Retriever (mustard, terracotta, cream) */
-  --color-bg: #fff8ed;
-  --color-surface: #ffffff;
-  --color-primary: #f4a825;
-  --color-primary-contrast: #5c4033;
-  --color-secondary: #e07a5f;
-  --color-secondary-contrast: #ffffff;
-  --color-accent: #8aa17e;
-  --color-accent-contrast: #ffffff;
-  --color-text: #5c4033;
-  --color-text-muted: #8a6f5c;
+  /* Palette: Golden Retriever (mustard, terracotta, cream).
+     Stored as "R G B" triples (no `#`, no commas) so Tailwind can apply
+     opacity modifiers like bg-brand-bg/90 via rgb(var(--x) / <alpha>) —
+     see the `brand` colors in tailwind.config.js. */
+  --color-bg: 255 248 237;
+  --color-surface: 255 255 255;
+  --color-primary: 244 168 37;
+  --color-primary-contrast: 92 64 51;
+  --color-secondary: 224 122 95;
+  --color-secondary-contrast: 255 255 255;
+  --color-accent: 138 161 126;
+  --color-accent-contrast: 255 255 255;
+  --color-text: 92 64 51;
+  --color-text-muted: 138 111 92;
   --color-border: rgba(92, 64, 51, 0.15);
+
+  /* Corkboard pet cards */
+  --color-cork: #c9986a;
+  --color-cork-dark: #b07f4e;
+  --color-frame: #6b4226;
+  --color-frame-dark: #4a2d19;
+  --color-pin: rgb(var(--color-secondary));
 
   /* Fonts: hand-written display + soft rounded body */
   --font-heading: "Caveat", cursive;
