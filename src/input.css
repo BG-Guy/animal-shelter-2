@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-weight: 400;
+  }
+}
+
+@layer utilities {
+  .wag {
+    transition: transform 0.2s ease;
+  }
+  .wag:hover {
+    transform: rotate(-2deg) scale(1.02);
+  }
+}
