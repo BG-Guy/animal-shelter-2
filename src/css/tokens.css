@@ -1,0 +1,38 @@
+/*
+  Design tokens for the live site.
+  Chosen combo: Caveat + Nunito on the "Golden Retriever" palette.
+  Swapping the theme later means changing values here only —
+  tailwind.config.js reads colors/fonts through these variables.
+*/
+:root {
+  /* Palette: Golden Retriever (mustard, terracotta, cream) */
+  --color-bg: #fff8ed;
+  --color-surface: #ffffff;
+  --color-primary: #f4a825;
+  --color-primary-contrast: #5c4033;
+  --color-secondary: #e07a5f;
+  --color-secondary-contrast: #ffffff;
+  --color-accent: #8aa17e;
+  --color-accent-contrast: #ffffff;
+  --color-text: #5c4033;
+  --color-text-muted: #8a6f5c;
+  --color-border: rgba(92, 64, 51, 0.15);
+
+  /* Fonts: hand-written display + soft rounded body */
+  --font-heading: "Caveat", cursive;
+  --font-body: "Nunito", sans-serif;
+
+  /* Fluid type scale */
+  --fs-hero: clamp(2.75rem, 2rem + 3vw, 4.5rem);
+  --fs-h2: clamp(1.875rem, 1.5rem + 1.5vw, 2.75rem);
+  --fs-h3: clamp(1.375rem, 1.2rem + 0.8vw, 1.75rem);
+
+  /* Shape & shadow */
+  --radius-lg: 1.5rem;
+  --radius-full: 999px;
+  --shadow-soft: 0 8px 24px -8px rgba(92, 64, 51, 0.25);
+
+  /* Layout */
+  --container-max: 72rem;
+  --footer-height: 0px; /* set by reveal-footer.js once the footer is measured */
+}

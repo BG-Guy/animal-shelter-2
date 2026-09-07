@@ -4,8 +4,8 @@
   "private": true,
   "description": "Portfolio project: a warm, friendly animal shelter website.",
   "scripts": {
-    "build:css": "tailwindcss -i ./src/input.css -o ./dist/output.css --minify",
-    "watch:css": "tailwindcss -i ./src/input.css -o ./dist/output.css --watch",
+    "build:css": "tailwindcss -i ./src/css/input.css -o ./dist/output.css --minify",
+    "watch:css": "tailwindcss -i ./src/css/input.css -o ./dist/output.css --watch",
     "start": "npx serve ."
   },
   "devDependencies": {

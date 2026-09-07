@@ -5,31 +5,26 @@ shelter. Built with vanilla JavaScript and Tailwind CSS — no framework.
 
 ## Status
 
-Step 1: **style exploration**. `index.html` is a living style guide — pick a
-font pairing and a color palette and watch a mini homepage preview update
-live, so we can settle on a direction before building out the real site.
+The theme is chosen — **Caveat + Nunito** on the **Golden Retriever** palette
+— and `index.html` is now the real site structure: navbar, hero, stats,
+adoptable pets, how-it-works, about, volunteer/donate CTAs, testimonials, and
+a reveal-on-scroll footer.
 
-Open `index.html` in a browser (or run `npm start`) to try it.
+`style-guide.html` is kept around as the original design-exploration page
+(pick a font pairing / palette, see it live) — useful if the theme ever needs
+revisiting.
 
-## Font pairings
+## Theme
 
-Each pairing is a hand-written/display font for headings + a soft, rounded
-font for body text:
+The whole visual theme is driven by CSS variables in `src/css/tokens.css`
+(colors, fonts, fluid type scale, shadows, radii). `tailwind.config.js` reads
+its `brand.*` colors and `heading`/`body` font families from those variables,
+so re-theming the site means editing one file, not hunting through markup.
 
-- **Caveat + Nunito** — playful & scrapbook-y
-- **Kalam + Quicksand** — cozy & rounded
-- **Patrick Hand + Poppins** — storybook & clean
-- **Shantell Sans + Karla** — modern hand-lettered
-
-Fonts are self-hosted (`assets/fonts/`) rather than loaded from Google Fonts,
-so the page works offline and loads a bit faster.
-
-## Color palettes
-
-- **Golden Retriever** — mustard, terracotta & cream
-- **Peachy Paws** — peach, coral & teal
-- **Sunny Shelter** — sunflower yellow, pink & deep teal
-- **Cozy Blanket** — red, mustard & forest green
+- **Fonts** — Caveat (headings) + Nunito (body), self-hosted in
+  `assets/fonts/` so the site works offline and loads faster.
+- **Palette** — mustard `#F4A825`, terracotta `#E07A5F`, cream `#FFF8ED`,
+  sage `#8AA17E`, brown `#5C4033`.
 
 ## Development
 
@@ -45,10 +40,40 @@ npm start           # serves the project locally
 ## Project structure
 
 ```
-index.html          the style-guide / preview page
-src/input.css        Tailwind source
-src/main.js          font/palette data + interactivity (vanilla JS)
-dist/output.css       built Tailwind CSS (committed)
-assets/fonts/         self-hosted font files + fonts.css
-tailwind.config.js    palette colors & font families
+index.html                    the live site
+style-guide.html               font/color exploration page (dev reference)
+
+src/css/
+  tokens.css                    CSS custom properties — the whole theme lives here
+  base.css                      element resets + reveal-footer plumbing
+  input.css                     Tailwind entry point (imports the above)
+
+src/js/
+  main.js                       entry point — wires up all modules
+  modules/
+    nav.js                       mobile menu toggle + sticky header shadow
+    reveal-footer.js             keeps --footer-height in sync for the reveal effect
+    reveal-on-scroll.js          fades in [data-reveal] elements as they enter view
+    pets.js                      renders pet cards from data/pets.js
+  data/
+    pets.js                       adoptable pet data (edit this to add/remove pets)
+  style-guide.js                 logic for style-guide.html only
+
+dist/output.css                 built Tailwind CSS (committed)
+assets/fonts/                    self-hosted font files + fonts.css
+tailwind.config.js               brand colors/fonts, sourced from CSS variables
+.github/workflows/deploy-pages.yml   builds + deploys to GitHub Pages on push to main
 ```
+
+## Notable patterns
+
+- **Reveal footer** — `#page-shell` (everything except the footer) has a
+  `margin-bottom` equal to the footer's own height, and `#site-footer` is
+  `position: sticky; bottom: 0`. That's the entire effect — pure CSS, no
+  scroll listener — `reveal-footer.js` just keeps the height variable
+  accurate as content/viewport changes.
+- **Scroll reveal** — add `data-reveal` to any element to have it fade/slide
+  in once it enters the viewport (`reveal-on-scroll.js`, IntersectionObserver
+  based, respects `prefers-reduced-motion`).
+- **Data-driven pets** — the adoptable-pets grid renders from
+  `src/js/data/pets.js`; add a pet by adding an array entry, no HTML editing.

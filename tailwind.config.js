@@ -1,9 +1,18 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./index.html", "./src/**/*.{js,html}"],
+  content: ["./*.html", "./src/**/*.{js,html}"],
   theme: {
+    container: {
+      center: true,
+      padding: "1.5rem",
+    },
     extend: {
       fontFamily: {
+        // Live site tokens (src/css/tokens.css) — change the theme by editing the CSS variables, not here.
+        heading: ["var(--font-heading)", "cursive"],
+        body: ["var(--font-body)", "sans-serif"],
+
+        // Style-guide-only font families, used to preview each pairing.
         caveat: ["Caveat", "cursive"],
         nunito: ["Nunito", "sans-serif"],
         kalam: ["Kalam", "cursive"],
@@ -14,6 +23,22 @@ module.exports = {
         karla: ["Karla", "sans-serif"],
       },
       colors: {
+        // Live site tokens, backed by CSS variables so the whole theme is swappable from one file.
+        brand: {
+          bg: "var(--color-bg)",
+          surface: "var(--color-surface)",
+          primary: "var(--color-primary)",
+          "primary-contrast": "var(--color-primary-contrast)",
+          secondary: "var(--color-secondary)",
+          "secondary-contrast": "var(--color-secondary-contrast)",
+          accent: "var(--color-accent)",
+          "accent-contrast": "var(--color-accent-contrast)",
+          text: "var(--color-text)",
+          "text-muted": "var(--color-text-muted)",
+          border: "var(--color-border)",
+        },
+
+        // Style-guide-only palettes, used to preview each option.
         retriever: {
           mustard: "#F4A825",
           terracotta: "#E07A5F",
@@ -43,8 +68,16 @@ module.exports = {
           brown: "#432818",
         },
       },
+      fontSize: {
+        hero: "var(--fs-hero)",
+        "heading-2": "var(--fs-h2)",
+        "heading-3": "var(--fs-h3)",
+      },
+      maxWidth: {
+        container: "var(--container-max)",
+      },
       boxShadow: {
-        soft: "0 8px 24px -8px rgba(92, 64, 51, 0.25)",
+        soft: "var(--shadow-soft)",
       },
     },
   },

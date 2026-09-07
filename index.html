@@ -3,104 +3,226 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Furever Home — Style Exploration</title>
+  <title>Furever Home — Animal Shelter</title>
+  <meta name="description" content="Furever Home is a small, volunteer-run animal shelter. Meet adoptable dogs, cats and rabbits, volunteer, or donate to help them find a home." />
   <link rel="stylesheet" href="./assets/fonts/fonts.css" />
   <link rel="stylesheet" href="./dist/output.css" />
 </head>
-<body class="bg-[#FDF6EC] text-stone-700 antialiased">
+<body class="bg-brand-bg text-brand-text font-body antialiased">
+  <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:top-4 focus:left-4 focus:bg-brand-surface focus:px-4 focus:py-2 focus:rounded-full focus:shadow-soft">
+    Skip to content
+  </a>
 
-  <!-- Page header -->
-  <header class="max-w-5xl mx-auto px-6 pt-12 pb-6 text-center">
-    <p class="uppercase tracking-[0.2em] text-xs text-stone-400 mb-2">Portfolio project · Style exploration</p>
-    <h1 class="font-caveat text-5xl sm:text-6xl text-stone-800">Furever Home 🐾</h1>
-    <p class="mt-3 max-w-xl mx-auto text-stone-500">
-      Pick a font pairing and a color palette below — the mini homepage preview updates live so you can see
-      how each combination actually feels before we build the real site with it.
-    </p>
-  </header>
+  <div id="page-shell">
+    <!-- Navbar -->
+    <header id="site-header" class="sticky top-0 z-30 bg-brand-bg/90 backdrop-blur transition-shadow">
+      <nav class="container max-w-container flex items-center justify-between py-4">
+        <a href="#top" class="font-heading text-2xl text-brand-text">Furever Home 🐾</a>
 
-  <!-- Live preview -->
-  <section class="lg:sticky lg:top-0 z-20 px-4 pb-4 pt-2 bg-[#FDF6EC]/90 backdrop-blur">
-    <div
-      id="preview"
-      class="max-w-5xl mx-auto rounded-3xl shadow-soft border-4 border-white overflow-hidden transition-colors duration-300"
-    >
-      <!-- nav -->
-      <div id="preview-nav" class="flex items-center justify-between px-6 py-4">
-        <span id="preview-logo" class="text-2xl">Furever Home</span>
-        <div class="hidden sm:flex gap-6 text-sm font-semibold" id="preview-links">
-          <span>Adopt</span>
-          <span>Donate</span>
-          <span>Volunteer</span>
+        <button
+          id="nav-toggle"
+          type="button"
+          aria-expanded="false"
+          aria-controls="nav-menu"
+          class="sm:hidden w-10 h-10 flex items-center justify-center rounded-full border border-brand-border"
+        >
+          <span class="sr-only">Toggle menu</span>
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+
+        <div id="nav-menu" class="hidden sm:flex flex-col sm:flex-row gap-1 sm:gap-8 absolute sm:static top-full left-0 right-0 sm:top-auto bg-brand-bg sm:bg-transparent border-b sm:border-0 border-brand-border px-6 sm:px-0 py-4 sm:py-0 font-semibold text-sm">
+          <a href="#pets" class="py-2 sm:py-0 hover:text-brand-secondary transition">Adopt</a>
+          <a href="#how-it-works" class="py-2 sm:py-0 hover:text-brand-secondary transition">How it works</a>
+          <a href="#about" class="py-2 sm:py-0 hover:text-brand-secondary transition">About</a>
+          <a href="#get-involved" class="py-2 sm:py-0 hover:text-brand-secondary transition">Get involved</a>
         </div>
-      </div>
+      </nav>
+    </header>
 
-      <!-- hero -->
-      <div id="preview-hero" class="grid sm:grid-cols-2 gap-6 items-center px-6 pb-8 pt-2">
+    <main id="main">
+      <!-- Hero -->
+      <section id="top" class="container max-w-container pt-10 pb-16 sm:pt-16 sm:pb-24 grid sm:grid-cols-2 gap-10 items-center">
         <div>
-          <h2 id="preview-heading" class="text-4xl sm:text-5xl leading-tight mb-3">
+          <p class="uppercase tracking-[0.2em] text-xs text-brand-text-muted mb-3">Volunteer-run · Local shelter</p>
+          <h1 class="font-heading text-hero leading-[1.05] mb-5">
             Every paw deserves a home to run home to.
-          </h2>
-          <p id="preview-body" class="mb-5 text-[15px] leading-relaxed opacity-90">
+          </h1>
+          <p class="text-brand-text/90 mb-7 max-w-md">
             We're a small, volunteer-run shelter that believes every dog, cat, and
             bunny deserves a soft bed, a full bowl, and a family who shows up.
           </p>
-          <button id="preview-cta" class="wag px-6 py-3 rounded-full font-semibold shadow-soft">
-            Meet the animals →
-          </button>
+          <div class="flex flex-wrap gap-3">
+            <a href="#pets" class="wag px-6 py-3 rounded-full font-semibold shadow-soft bg-brand-primary text-brand-primary-contrast">
+              Meet the animals →
+            </a>
+            <a href="#get-involved" class="wag px-6 py-3 rounded-full font-semibold border-2 border-brand-secondary text-brand-secondary">
+              Donate
+            </a>
+          </div>
         </div>
 
-        <!-- mini pet card -->
-        <div id="preview-card" class="rounded-2xl p-5 border-2">
+        <div class="bg-brand-surface rounded-3xl p-6 border border-brand-border shadow-soft" data-reveal>
           <div class="flex items-center gap-4">
-            <div id="preview-avatar" class="w-16 h-16 rounded-full flex items-center justify-center text-3xl">🐶</div>
+            <div class="w-16 h-16 rounded-full bg-brand-primary/20 flex items-center justify-center text-3xl" aria-hidden="true">🐶</div>
             <div>
-              <p id="preview-pet-name" class="text-xl leading-none">Buddy</p>
-              <p class="text-sm opacity-70">Labrador mix · 2 yrs old</p>
+              <p class="font-heading text-heading-3 leading-none">Buddy</p>
+              <p class="text-sm text-brand-text-muted">Labrador mix · 2 yrs old</p>
             </div>
           </div>
-          <p class="text-sm mt-4 opacity-80">
+          <p class="text-sm mt-4 text-brand-text/90">
             "Buddy loves belly rubs, tennis balls, and greeting everyone like
             they're his best friend."
           </p>
-          <button id="preview-card-btn" class="mt-4 w-full py-2 rounded-full text-sm font-semibold">
+          <a href="#pets" class="mt-4 inline-block w-full text-center py-2 rounded-full text-sm font-semibold bg-brand-secondary text-brand-secondary-contrast hover:brightness-95 transition">
             Adopt Buddy
-          </button>
+          </a>
         </div>
+      </section>
+
+      <!-- Stats -->
+      <section class="container max-w-container pb-16 sm:pb-24" data-reveal>
+        <dl class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
+          <div class="bg-brand-surface rounded-2xl p-5 border border-brand-border">
+            <dt class="sr-only">Animals adopted</dt>
+            <dd class="font-heading text-heading-2 text-brand-secondary">312</dd>
+            <p class="text-xs text-brand-text-muted mt-1">Animals adopted</p>
+          </div>
+          <div class="bg-brand-surface rounded-2xl p-5 border border-brand-border">
+            <dt class="sr-only">Years running</dt>
+            <dd class="font-heading text-heading-2 text-brand-secondary">9</dd>
+            <p class="text-xs text-brand-text-muted mt-1">Years running</p>
+          </div>
+          <div class="bg-brand-surface rounded-2xl p-5 border border-brand-border">
+            <dt class="sr-only">Active volunteers</dt>
+            <dd class="font-heading text-heading-2 text-brand-secondary">48</dd>
+            <p class="text-xs text-brand-text-muted mt-1">Volunteers</p>
+          </div>
+          <div class="bg-brand-surface rounded-2xl p-5 border border-brand-border">
+            <dt class="sr-only">Partner vets</dt>
+            <dd class="font-heading text-heading-2 text-brand-secondary">6</dd>
+            <p class="text-xs text-brand-text-muted mt-1">Partner vets</p>
+          </div>
+        </dl>
+      </section>
+
+      <!-- Featured pets -->
+      <section id="pets" class="container max-w-container pb-16 sm:pb-24">
+        <div class="flex items-end justify-between mb-8" data-reveal>
+          <div>
+            <h2 class="font-heading text-heading-2">Looking for a home</h2>
+            <p class="text-brand-text-muted text-sm mt-1">A few of the friends waiting to meet you.</p>
+          </div>
+        </div>
+        <div id="pets-grid" class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5" data-reveal></div>
+      </section>
+
+      <!-- How it works -->
+      <section id="how-it-works" class="container max-w-container pb-16 sm:pb-24">
+        <h2 class="font-heading text-heading-2 mb-8" data-reveal>How adoption works</h2>
+        <ol class="grid sm:grid-cols-3 gap-5">
+          <li class="bg-brand-surface rounded-3xl p-6 border border-brand-border" data-reveal>
+            <span class="font-heading text-3xl text-brand-primary">1</span>
+            <h3 class="font-heading text-heading-3 mt-1 mb-2">Browse &amp; meet</h3>
+            <p class="text-sm text-brand-text/90">Come by during open hours or book a meet-and-greet with an animal you like.</p>
+          </li>
+          <li class="bg-brand-surface rounded-3xl p-6 border border-brand-border" data-reveal>
+            <span class="font-heading text-3xl text-brand-primary">2</span>
+            <h3 class="font-heading text-heading-3 mt-1 mb-2">Apply</h3>
+            <p class="text-sm text-brand-text/90">Fill out a short adoption form so we can make sure it's a good match, both ways.</p>
+          </li>
+          <li class="bg-brand-surface rounded-3xl p-6 border border-brand-border" data-reveal>
+            <span class="font-heading text-3xl text-brand-primary">3</span>
+            <h3 class="font-heading text-heading-3 mt-1 mb-2">Bring them home</h3>
+            <p class="text-sm text-brand-text/90">Pay a small adoption fee that covers vaccines and spay/neuter, then head home together.</p>
+          </li>
+        </ol>
+      </section>
+
+      <!-- About -->
+      <section id="about" class="container max-w-container pb-16 sm:pb-24 grid sm:grid-cols-2 gap-10 items-center">
+        <div class="bg-brand-accent/15 rounded-3xl p-8 border border-brand-border" data-reveal>
+          <p class="font-heading text-3xl text-brand-text">"No animal leaves here without a soft place to land — even if that place is just us, for now."</p>
+        </div>
+        <div data-reveal>
+          <h2 class="font-heading text-heading-2 mb-4">About Furever Home</h2>
+          <p class="text-brand-text/90 mb-4">
+            Furever Home started in a garage with three fosters and a lot of hope.
+            Today we're a small team of volunteers who take in strays, injured
+            animals, and pets whose families could no longer care for them —
+            and get them healthy, comfortable, and ready for a new home.
+          </p>
+          <p class="text-brand-text/90">
+            We rely entirely on adoption fees, donations, and people willing to
+            give an afternoon a week. If that's you, we'd love the help.
+          </p>
+        </div>
+      </section>
+
+      <!-- Get involved -->
+      <section id="get-involved" class="container max-w-container pb-16 sm:pb-24">
+        <div class="grid sm:grid-cols-2 gap-5">
+          <div class="rounded-3xl p-8 bg-brand-secondary text-brand-secondary-contrast" data-reveal>
+            <h3 class="font-heading text-heading-3 mb-2">Volunteer with us</h3>
+            <p class="text-sm mb-5 opacity-90">Walk dogs, socialize cats, help at adoption events, or foster an animal in your own home.</p>
+            <a href="#" class="inline-block px-5 py-2 rounded-full text-sm font-semibold bg-white text-brand-secondary hover:brightness-95 transition">Sign up to volunteer</a>
+          </div>
+          <div class="rounded-3xl p-8 bg-brand-primary text-brand-primary-contrast" data-reveal>
+            <h3 class="font-heading text-heading-3 mb-2">Make a donation</h3>
+            <p class="text-sm mb-5 opacity-90">Every dollar goes straight to food, vet care, and shelter for animals waiting on a home.</p>
+            <a href="#" class="inline-block px-5 py-2 rounded-full text-sm font-semibold bg-white text-brand-primary-contrast hover:brightness-95 transition">Donate now</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Testimonials -->
+      <section class="container max-w-container pb-20 sm:pb-28">
+        <h2 class="font-heading text-heading-2 mb-8" data-reveal>Happy tails</h2>
+        <div class="grid sm:grid-cols-2 gap-5">
+          <blockquote class="bg-brand-surface rounded-3xl p-6 border border-brand-border" data-reveal>
+            <p class="text-brand-text/90 mb-4">"The team knew every animal by name and personality. We found Milo within a week and the whole process felt warm, not transactional."</p>
+            <footer class="text-sm text-brand-text-muted">— Jordan &amp; Milo</footer>
+          </blockquote>
+          <blockquote class="bg-brand-surface rounded-3xl p-6 border border-brand-border" data-reveal>
+            <p class="text-brand-text/90 mb-4">"Fostering through Furever Home was the easiest way to help without a lifelong commitment — they support you the whole way."</p>
+            <footer class="text-sm text-brand-text-muted">— Priya, foster volunteer</footer>
+          </blockquote>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Reveal footer -->
+  <footer id="site-footer" class="bg-brand-secondary text-brand-secondary-contrast">
+    <div class="container max-w-container py-14 grid sm:grid-cols-3 gap-10">
+      <div>
+        <p class="font-heading text-2xl mb-3">Furever Home 🐾</p>
+        <p class="text-sm opacity-90 max-w-xs">A small, volunteer-run animal shelter finding forever homes, one paw at a time.</p>
+      </div>
+      <div>
+        <p class="font-semibold text-sm uppercase tracking-wide mb-3 opacity-80">Quick links</p>
+        <ul class="space-y-2 text-sm">
+          <li><a href="#pets" class="hover:underline">Adopt</a></li>
+          <li><a href="#how-it-works" class="hover:underline">How it works</a></li>
+          <li><a href="#about" class="hover:underline">About</a></li>
+          <li><a href="#get-involved" class="hover:underline">Get involved</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="font-semibold text-sm uppercase tracking-wide mb-3 opacity-80">Visit us</p>
+        <address class="text-sm not-italic space-y-1 opacity-90">
+          <p>123 Wagging Tail Lane</p>
+          <p>Open Tue–Sun, 10am–5pm</p>
+          <p><a href="mailto:hello@fureverhome.org" class="hover:underline">hello@fureverhome.org</a></p>
+        </address>
       </div>
     </div>
-  </section>
-
-  <main class="max-w-5xl mx-auto px-6 pb-24">
-
-    <!-- Font pairings -->
-    <section class="mt-12">
-      <h3 class="font-caveat text-3xl text-stone-800 mb-1">1. Choose a font pairing</h3>
-      <p class="text-stone-500 mb-6 text-sm">A hand-written display font for headings, paired with a soft, rounded font for body text.</p>
-      <div id="font-grid" class="grid sm:grid-cols-2 gap-4"></div>
-    </section>
-
-    <!-- Color palettes -->
-    <section class="mt-14">
-      <h3 class="font-caveat text-3xl text-stone-800 mb-1">2. Choose a color palette</h3>
-      <p class="text-stone-500 mb-6 text-sm">Warm, friendly tones — click a palette to see it applied to the preview above.</p>
-      <div id="palette-grid" class="grid sm:grid-cols-2 gap-4"></div>
-    </section>
-
-    <!-- Summary -->
-    <section class="mt-14 text-center bg-white/70 border-2 border-dashed border-stone-300 rounded-2xl p-8">
-      <h3 class="font-caveat text-3xl text-stone-800 mb-2">Your pick</h3>
-      <p id="summary" class="text-stone-600">Caveat + Nunito, on Golden Retriever</p>
-      <p class="text-xs text-stone-400 mt-3">Your selection is saved automatically — come back anytime and it'll still be here.</p>
-      <button id="reset-btn" class="mt-4 text-xs underline text-stone-400 hover:text-stone-600">Reset to default</button>
-    </section>
-
-  </main>
-
-  <footer class="text-center text-xs text-stone-400 pb-10">
-    Built with vanilla JS + Tailwind CSS.
+    <div class="border-t border-white/20">
+      <p class="container max-w-container py-4 text-xs opacity-75">© 2026 Furever Home. Made with care, for animals who deserve it.</p>
+    </div>
   </footer>
 
-  <script src="./src/main.js"></script>
+  <script type="module" src="./src/js/main.js"></script>
 </body>
 </html>
