@@ -17,19 +17,25 @@
     font-family: var(--font-heading);
   }
 
-  /* Reveal footer: #page-shell sits above the footer and is pulled up by
-     its own height so the sticky footer underneath is revealed only once
-     the shell has fully scrolled past. See src/js/modules/reveal-footer.js */
+  /* Reveal footer: #site-footer is fixed to the bottom of the viewport from
+     the moment it mounts. #page-shell sits opaque on top of it (higher
+     z-index) and covers it completely until the shell finishes scrolling
+     past; #footer-spacer reserves the scroll room the fixed footer no
+     longer occupies in normal flow. See src/js/modules/reveal-footer.js
+     for why this needs position: fixed rather than position: sticky. */
   #page-shell {
     position: relative;
     z-index: 1;
     background: rgb(var(--color-bg));
-    margin-bottom: calc(-1 * var(--footer-height));
+  }
+
+  #footer-spacer {
+    height: var(--footer-height);
   }
 
   #site-footer {
-    position: sticky;
-    bottom: 0;
+    position: fixed;
+    inset: auto 0 0 0;
     z-index: 0;
   }
 
