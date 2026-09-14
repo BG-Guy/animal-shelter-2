@@ -1,0 +1,12 @@
+      <!-- Featured pets: cards are rendered into #pets-grid at runtime by
+           src/js/modules/pets.js from src/js/data/pets.js. Custom card
+           styling (the cork-board look) lives in src/css/components/pets.css. -->
+      <section id="pets" class="container max-w-container pb-16 sm:pb-24">
+        <div class="flex items-end justify-between mb-8" data-reveal>
+          <div>
+            <h2 class="font-heading text-heading-2">Looking for a home</h2>
+            <p class="text-brand-text-muted text-sm mt-1">A few of the friends waiting to meet you.</p>
+          </div>
+        </div>
+        <div id="pets-grid" class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5" data-reveal></div>
+      </section>

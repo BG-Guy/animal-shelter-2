@@ -1,0 +1,6 @@
+/* Aggregates per-component CSS. Most sections style entirely with Tailwind
+   utility classes in their src/components/*.html file and don't need an
+   entry here — add one only when a component needs CSS Tailwind utilities
+   can't express cleanly (custom gradients, keyframes, pseudo-elements, etc.),
+   as pets.css does for the cork-board pet cards. */
+@import "./pets.css";

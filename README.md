@@ -30,23 +30,52 @@ so re-theming the site means editing one file, not hunting through markup.
 
 ```bash
 npm install
-npm run watch:css   # rebuilds dist/output.css on change
+npm run build       # regenerates index.html from src/layout + src/components, then builds CSS
+npm run watch:css   # rebuilds dist/output.css on change (run alongside editing)
 npm start           # serves the project locally
 ```
 
-`dist/output.css` is committed so the page also works with no build step
-(e.g. straight from GitHub Pages).
+`index.html` and `dist/output.css` are both committed, built artifacts —
+the page works with no build step (e.g. straight from GitHub Pages), but
+**don't hand-edit `index.html`**: edit `src/layout/index.html` or a file in
+`src/components/` and run `npm run build:html` (or `npm run build`), or
+your changes will be overwritten on the next build. CI runs `npm run build`
+on every deploy too, so the committed file always matches its source.
 
 ## Project structure
 
 ```
-index.html                    the live site
-style-guide.html               font/color exploration page (dev reference)
+index.html                    the live site — GENERATED, edit src/layout + src/components instead
+style-guide.html               font/color exploration page (dev reference, hand-edited directly)
+
+src/layout/
+  index.html                    the page shell: <head>, skip link, #page-shell/#footer-spacer
+                                 wrapper and script tag, with <!-- @include name --> markers
+
+src/components/                 one HTML partial per section of the live site — open any file
+                                 here to read/edit just that piece of the page
+  navbar.html
+  hero.html
+  stats.html
+  pets.html                     wraps #pets-grid, which pets.js fills in at runtime
+  how-it-works.html
+  about.html
+  get-involved.html
+  testimonials.html
+  footer.html
+
+scripts/
+  build-html.js                  assembles index.html from src/layout + src/components
 
 src/css/
   tokens.css                    CSS custom properties — the whole theme lives here
   base.css                      element resets + reveal-footer plumbing
   input.css                     Tailwind entry point (imports the above)
+  components/
+    index.css                    imports every component's custom CSS file
+    pets.css                     cork-board pet card styles (gradients Tailwind can't express)
+                                  — most components need no file here since they're styled
+                                  entirely with Tailwind utility classes in their .html partial
 
 src/js/
   main.js                       entry point — wires up all modules
@@ -64,6 +93,10 @@ assets/fonts/                    self-hosted font files + fonts.css
 tailwind.config.js               brand colors/fonts, sourced from CSS variables
 .github/workflows/deploy-pages.yml   builds + deploys to GitHub Pages on push to main
 ```
+
+`style-guide.html` is a single small, self-contained tool page (not a
+section of the live site), so it isn't split into components — it keeps its
+own markup and `src/js/style-guide.js`.
 
 ## Notable patterns
 

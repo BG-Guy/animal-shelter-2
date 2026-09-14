@@ -1,5 +1,6 @@
 /* Corkboard pet card: a wooden frame around a speckled cork texture,
-   with a "photo" pinned to it. Used for the adoptable-pets grid. */
+   with a "photo" pinned to it. Used by src/components/pets.html /
+   src/js/modules/pets.js for the adoptable-pets grid. */
 
 @layer components {
   .cork-card {
