@@ -1,0 +1,102 @@
+/* Hero snapshots: Buddy's polaroid taped to the page with Willow's tucked
+   in behind it, so the hero opens on a real animal instead of a plain
+   card. The "Adopt Buddy" sticker is slapped over the bottom corner. */
+
+@layer components {
+  /* Both polaroids share one grid cell so they stack */
+  .polaroid-stack {
+    display: grid;
+    padding: 1.5rem 0.5rem 2rem;
+  }
+
+  .polaroid-stack > * {
+    grid-area: 1 / 1;
+  }
+
+  .polaroid {
+    --polaroid-tilt: 2.5deg;
+    position: relative;
+    justify-self: center;
+    width: min(88%, 21rem);
+    padding: 0.8rem 0.8rem 3.25rem;
+    /* The print's frame: smooth white photo paper with a crisp edge, so it
+       reads as a photo lying on the page rather than part of it */
+    background: var(--print-paper);
+    border: 1.5px solid var(--print-edge);
+    border-radius: var(--print-radius);
+    rotate: var(--polaroid-tilt);
+  }
+
+  /* The second photo, peeking out from behind and to the left */
+  .polaroid--behind {
+    --polaroid-tilt: -8deg;
+    align-self: start;
+    width: min(70%, 16rem);
+    padding-bottom: 1rem;
+    translate: -2.75rem -0.5rem;
+  }
+
+  @media (min-width: 640px) {
+    .polaroid--behind {
+      translate: -7rem -1.25rem;
+    }
+  }
+
+  /* The "photo": a flat illustration — a big emoji in front of a flat
+     pale circle on a solid colour, with print grain */
+  .polaroid-photo {
+    --photo-tone: #f7c45a;
+    display: grid;
+    place-items: center;
+    aspect-ratio: 4 / 3;
+    font-size: clamp(4rem, 3rem + 4vw, 6rem);
+    background: var(--texture-speckle),
+      radial-gradient(circle at 50% 55%, rgba(255, 255, 255, 0.38) 0 34%, transparent 34.5%), var(--photo-tone);
+    /* Crisp hairline where the picture meets the white border */
+    box-shadow: var(--print-keyline);
+  }
+
+  .polaroid-photo--sage {
+    --photo-tone: #a9bd9c;
+  }
+
+  /* Handwritten caption and note in the polaroid's bottom margin */
+  .polaroid-caption {
+    margin-top: 0.75rem;
+    font-family: var(--font-heading);
+    font-size: 2rem;
+    line-height: 1;
+  }
+
+  .polaroid-note {
+    margin-top: 0.5rem;
+    font-family: var(--font-heading);
+    font-size: 1.3rem;
+    line-height: 1.25;
+    color: rgb(var(--color-text) / 0.9);
+  }
+
+  /* Sticker slapped over the bottom-right corner, hanging off the edge */
+  .polaroid-sticker {
+    position: absolute;
+    right: -0.75rem;
+    bottom: -1.1rem;
+  }
+
+  @media (min-width: 640px) {
+    .polaroid-sticker {
+      right: -1.5rem;
+    }
+  }
+}
+
+/* A real photo fills the polaroid's picture area */
+.polaroid-photo--real {
+  overflow: hidden;
+}
+.polaroid-photo--real img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}

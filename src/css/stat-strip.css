@@ -1,0 +1,67 @@
+/* Stats: a strip of kraft paper taped across the page, its four figures
+   split by dashed "cut here" lines. Replaces the plain number tiles. */
+
+@layer components {
+  .stat-strip {
+    /* Flat kraft paper with fibres and flecks, painted with hand-cut
+       edges by .rough-paper (paper-texture.css) */
+    --surface: var(--texture-fiber), var(--texture-speckle), var(--texture-mottle), var(--color-kraft);
+    position: relative;
+    rotate: -0.75deg;
+    padding: 0.75rem 0.5rem;
+    border-radius: 3px 8px 4px 10px / 8px 3px 10px 4px;
+  }
+
+  .stat-strip-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* <dt> comes first for screen readers; column-reverse shows the
+     figure above its label. */
+  .stat {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 1rem 0.5rem;
+    text-align: center;
+  }
+
+  /* Dashed dividers: a 2×2 grid on phones, one row from sm up */
+  .stat:nth-child(even) {
+    border-left: 2px dashed rgba(74, 45, 25, 0.3);
+  }
+
+  .stat:nth-child(n + 3) {
+    border-top: 2px dashed rgba(74, 45, 25, 0.3);
+  }
+
+  @media (min-width: 640px) {
+    .stat-strip-grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    .stat:nth-child(n + 3) {
+      border-top: 0;
+    }
+
+    .stat + .stat {
+      border-left: 2px dashed rgba(74, 45, 25, 0.3);
+    }
+  }
+
+  .stat-value {
+    font-family: var(--font-heading);
+    font-size: clamp(2.5rem, 2rem + 2vw, 3.5rem);
+    line-height: 1;
+    color: rgb(var(--color-primary-contrast));
+  }
+
+  .stat-label {
+    font-size: 0.75rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgb(var(--color-text) / 0.9);
+  }
+}

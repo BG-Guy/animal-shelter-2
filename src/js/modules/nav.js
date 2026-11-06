@@ -1,3 +1,5 @@
+import { initDotUnderline } from "./dot-underline.js";
+
 export function initNav() {
   const toggle = document.getElementById("nav-toggle");
   const close = document.getElementById("nav-close");
@@ -34,8 +36,11 @@ export function initNav() {
   });
 
   const applyScrollShadow = () => {
-    header.classList.toggle("shadow-soft", window.scrollY > 8);
+    // A flat hairline under the header once the page scrolls (no soft shadow)
+    header.classList.toggle("shadow-[0_1px_0_rgba(92,64,51,0.15)]", window.scrollY > 8);
   };
   applyScrollShadow();
   window.addEventListener("scroll", applyScrollShadow, { passive: true });
+
+  menu.querySelectorAll("a").forEach((link) => initDotUnderline(link, { color: "#E07A5F" }));
 }

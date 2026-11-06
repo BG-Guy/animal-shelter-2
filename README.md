@@ -46,6 +46,15 @@ style-guide.html               font/color exploration page (dev reference)
 src/css/
   tokens.css                    CSS custom properties — the whole theme lives here
   base.css                      element resets + reveal-footer plumbing
+  components.css                craft cards (tape, notes, poster, box) + marker squiggles
+  paper-texture.css             .rough-paper: textured card surfaces with hand-cut edges
+  sticker.css                   die-cut sticker buttons (every CTA on the home page)
+  paper-band.css                full-width torn-paper section bands + torn page edge
+  polaroid.css                  hero polaroid snapshots
+  stat-strip.css                kraft-paper stats strip
+  step-cards.css                "How it works" scraps: sticky note, torn sheet, gift tag
+  pet-notebook.css              "Looking for a home" notebook: bookmarks, cover, pages, page turns
+  motion.css                    scroll choreography for [data-reveal] blocks
   input.css                     Tailwind entry point (imports the above)
 
 src/js/
@@ -53,8 +62,10 @@ src/js/
   modules/
     nav.js                       mobile menu toggle + sticky header shadow
     reveal-footer.js             keeps --footer-height in sync for the reveal effect
-    reveal-on-scroll.js          fades in [data-reveal] elements as they enter view
-    pets.js                      renders pet cards from data/pets.js
+    reveal-on-scroll.js          marks [data-reveal] elements visible as they enter view
+    count-up.js                  counts the stat figures up from zero on first view
+    pets.js                      renders the pet notebook (tabs + pages) from data/pets.js
+    pet-notebook.js              page-turn animation when a bookmark is picked or a page swiped
   data/
     pets.js                       adoptable pet data (edit this to add/remove pets)
   style-guide.js                 logic for style-guide.html only
@@ -72,8 +83,14 @@ tailwind.config.js               brand colors/fonts, sourced from CSS variables
   `position: sticky; bottom: 0`. That's the entire effect — pure CSS, no
   scroll listener — `reveal-footer.js` just keeps the height variable
   accurate as content/viewport changes.
-- **Scroll reveal** — add `data-reveal` to any element to have it fade/slide
-  in once it enters the viewport (`reveal-on-scroll.js`, IntersectionObserver
-  based, respects `prefers-reduced-motion`).
-- **Data-driven pets** — the adoptable-pets grid renders from
-  `src/js/data/pets.js`; add a pet by adding an array entry, no HTML editing.
+- **Scroll reveal** — add `data-reveal` to any element to have it rise in
+  once it enters the viewport. `reveal-on-scroll.js` (IntersectionObserver)
+  numbers blocks that arrive together so they stagger; `motion.css` then
+  lands the craft details inside each block — tape, pins, stickers, marker
+  squiggles. Animations use the individual `translate`/`scale`/`rotate`
+  properties so they never overwrite a card's own tilt. Respects
+  `prefers-reduced-motion`.
+- **Data-driven pets** — the adoption notebook renders from
+  `src/js/data/pets.js`; add a pet by adding an array entry (with an
+  optional `photos` list of `{ prop, caption }` snapshots) and it gets its
+  own bookmark and page, no HTML editing.

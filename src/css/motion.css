@@ -1,0 +1,114 @@
+/* Scroll choreography: the scrapbook assembles itself as you scroll.
+   reveal-on-scroll.js marks each [data-reveal] block .is-visible as it
+   enters the viewport, numbering blocks that arrive together in
+   --reveal-order. Each block rises into place, then its craft details land
+   on top of it: tape slaps on, notebook bookmarks slide up, stickers stick,
+   marker lines draw themselves in. */
+
+/* Keyframes live outside @layer so Tailwind never drops them. Animations
+   use the individual translate/scale/rotate properties, which stack on
+   top of each element's own `transform` tilt instead of replacing it. */
+@keyframes reveal-rise {
+  from {
+    opacity: 0;
+    translate: 0 1.25rem;
+  }
+}
+
+@keyframes tape-slap {
+  from {
+    opacity: 0;
+    scale: 1.5;
+  }
+}
+
+@keyframes tab-rise {
+  from {
+    opacity: 0;
+    translate: 0 2.5rem;
+  }
+}
+
+@keyframes sticker-stick {
+  from {
+    opacity: 0;
+    scale: 1.35;
+    rotate: calc(var(--sticker-tilt) - 10deg);
+  }
+}
+
+@layer components {
+  /* Blocks: hidden until revealed, then rise in, staggered by arrival order */
+  [data-reveal] {
+    --reveal-delay: calc(var(--reveal-order, 0) * 90ms);
+    opacity: 0;
+  }
+
+  [data-reveal].is-visible {
+    opacity: 1;
+    animation: reveal-rise 0.7s var(--ease-out) var(--reveal-delay) backwards;
+  }
+
+  /* Craft details wait, hidden, until their block has been revealed */
+  [data-reveal]:not(.is-visible) :is(.craft-tape, .nb-sticker, .nb-tab, .sticker) {
+    opacity: 0;
+  }
+
+  .is-visible :is(.craft-tape, .nb-sticker) {
+    animation: tape-slap 0.45s var(--ease-pop) calc(var(--reveal-delay, 0s) + 0.35s) backwards;
+  }
+
+  /* Notebook bookmarks slide up out of the pages, one after another */
+  .is-visible .nb-tab {
+    animation: tab-rise 0.5s var(--ease-pop) calc(var(--reveal-delay, 0s) + 0.25s + var(--tab-i, 0) * 90ms)
+      backwards;
+  }
+
+  .is-visible .sticker {
+    animation: sticker-stick 0.5s var(--ease-pop) calc(var(--reveal-delay, 0s) + var(--sticker-delay, 0.45s))
+      backwards;
+  }
+
+  /* A second sticker in the same row lands a beat after the first */
+  .sticker + .sticker {
+    --sticker-delay: 0.6s;
+  }
+
+  /* Marker lines (heading squiggles, the hero swash, step arrows) draw in
+     left to right once their block has landed */
+  .craft-heading::after,
+  .marker-swash::after,
+  .step::after {
+    clip-path: inset(0 0 0 0);
+    transition: clip-path 0.8s var(--ease-out) calc(var(--reveal-delay, 0s) + 0.45s);
+  }
+
+  [data-reveal]:not(.is-visible) :is(.craft-heading, .marker-swash)::after,
+  :is(.craft-heading, .step)[data-reveal]:not(.is-visible)::after {
+    clip-path: inset(0 100% 0 0);
+  }
+
+  /* Reduced motion: everything is simply there, in place, from the start */
+  @media (prefers-reduced-motion: reduce) {
+    [data-reveal],
+    [data-reveal]:not(.is-visible) :is(.craft-tape, .nb-sticker, .nb-tab, .sticker) {
+      opacity: 1;
+    }
+
+    [data-reveal].is-visible,
+    .is-visible :is(.craft-tape, .nb-sticker, .nb-tab, .sticker) {
+      animation: none;
+    }
+
+    [data-reveal]:not(.is-visible) :is(.craft-heading, .marker-swash)::after,
+    :is(.craft-heading, .step)[data-reveal]:not(.is-visible)::after {
+      clip-path: inset(0 0 0 0);
+    }
+
+    .craft-heading::after,
+    .marker-swash::after,
+    .step::after {
+      transition: none;
+    }
+  }
+}

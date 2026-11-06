@@ -1,0 +1,140 @@
+/* How it works: three homemade scraps stuck to the page — a sticky note,
+   a sheet torn out of a notebook, and a kraft gift tag on a string —
+   joined by hand-drawn dashed arrows. Each has a hand-circled step
+   number, a pencil doodle, and handwritten text. The scrap itself is a
+   .step-card (surface painted by .rough-paper in paper-texture.css)
+   inside a .step list item, which carries the arrow to the next step. */
+
+@layer components {
+  .step {
+    position: relative;
+  }
+
+  /* Dashed arrow drawn across the gap toward the next step (side-by-side layout only) */
+  @media (min-width: 640px) {
+    .step:not(:last-child)::after {
+      content: "";
+      position: absolute;
+      top: 1.75rem;
+      left: calc(100% + 0.35rem);
+      width: 2.4rem;
+      height: 1.5rem;
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 24' fill='none' stroke='%23b8583e' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2 16C12 4 26 4 34 12' stroke-dasharray='3 4'/%3E%3Cpath d='M32.4 6.2 34 12l-5.8-1.55'/%3E%3C/svg%3E")
+        center / contain no-repeat;
+    }
+  }
+
+  .step-card {
+    --step-tilt: -1deg;
+    position: relative;
+    height: 100%;
+    padding: 1.75rem 1.5rem;
+    rotate: var(--step-tilt);
+  }
+
+  /* 1. Sticky note: flat pale mustard, with its gummed strip along the top */
+  .step-card--sticky {
+    --step-tilt: -2deg;
+    --surface: linear-gradient(rgba(176, 120, 20, 0.13) 0 1.5rem, transparent 1.5rem), var(--texture-speckle),
+      var(--texture-mottle), #f8d98c;
+  }
+
+  /* 2. A sheet torn out of a spiral notebook: ruled lines, a margin line,
+     and a ragged top where it was ripped off the spiral */
+  .step-card--sheet {
+    --step-tilt: 1.25deg;
+    --surface: linear-gradient(
+        to right,
+        transparent 1.6rem,
+        var(--color-page-margin) 1.6rem calc(1.6rem + 1.5px),
+        transparent calc(1.6rem + 1.5px)
+      ),
+      repeating-linear-gradient(transparent 0 calc(1.75rem - 1px), var(--color-page-rule) calc(1.75rem - 1px) 1.75rem)
+        0 1.1rem / 100% calc(100% - 1.1rem) no-repeat,
+      var(--texture-speckle), var(--texture-mottle), #fffdf7;
+    --surface-clip: polygon(0 7px, 2.6% 6px, 5.5% 11px, 6.8% 9px, 9.7% 3px, 12.3% 2px, 13.8% 9px, 16.9% 8px, 19.3% 3px, 20.5% 3px, 22.6% 2px, 25.8% 8px, 27.4% 1px, 28.9% 9px, 30.4% 0px, 33.7% 0px, 35.4% 3px, 38.7% 2px, 41.8% 4px, 43.7% 3px, 46.1% 3px, 47.7% 3px, 51% 8px, 52.8% 6px, 55% 2px, 56.7% 6px, 58.6% 0px, 61.1% 6px, 62.5% 6px, 65.5% 9px, 68.2% 2px, 70.4% 2px, 71.8% 0px, 75.1% 6px, 78.1% 0px, 80.5% 8px, 82.5% 0px, 84.7% 2px, 87.3% 3px, 88.8% 3px, 92% 9px, 94% 6px, 97.1% 4px, 100% 6px, 100% 100%, 0 100%);
+    padding-top: 2.25rem;
+    padding-left: 2.4rem;
+  }
+
+  /* 3. Kraft gift tag: top corners snipped off, a punched hole, a string */
+  .step-card--tag {
+    --step-tilt: -0.75deg;
+    --surface: var(--texture-fiber), var(--texture-speckle), var(--texture-mottle), var(--color-kraft);
+    --surface-clip: polygon(14% 0, 86% 0, 100% 1.75rem, 100% 100%, 0 100%, 0 1.75rem);
+    padding-top: 2.75rem;
+  }
+
+  /* The tag's punched hole, with a flat reinforcement ring around it */
+  .step-tag-hole {
+    position: absolute;
+    top: 0.85rem;
+    left: calc(50% - 0.45rem);
+    width: 0.9rem;
+    height: 0.9rem;
+    border-radius: 50%;
+    background: rgb(var(--color-bg));
+    box-shadow: 0 0 0 3px #f3e8d4, 0 0 0 4px rgba(92, 64, 51, 0.3);
+  }
+
+  /* A loop of twine through the hole, curling off the top of the tag */
+  .step-tag-string {
+    position: absolute;
+    bottom: calc(100% - 1.3rem);
+    left: calc(50% - 0.6rem);
+    width: 3rem;
+    height: 3.25rem;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 52' fill='none' stroke='%23b8583e' stroke-width='1.8' stroke-linecap='round'%3E%3Cpath d='M10 50C4 38 14 30 22 32S30 46 20 44 12 22 24 14 40 6 44 2'/%3E%3C/svg%3E")
+      center / contain no-repeat;
+    pointer-events: none;
+  }
+
+  /* Step number with a scribbled circle round it, drawn in one loose loop */
+  .step-number {
+    display: inline-grid;
+    place-items: center;
+    width: 3.1rem;
+    height: 3.1rem;
+    font-family: var(--font-heading);
+    font-size: 1.9rem;
+    line-height: 1;
+    color: rgb(var(--color-secondary-deep));
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48' fill='none' stroke='%23b8583e' stroke-width='2.2' stroke-linecap='round'%3E%3Cpath d='M30 6C14 3 4 14 5 26s14 19 25 17 16-13 14-24S33 5 21 8'/%3E%3C/svg%3E")
+      center / contain no-repeat;
+    rotate: -8deg;
+  }
+
+  .step-text {
+    font-family: var(--font-heading);
+    font-size: 1.35rem;
+    line-height: 1.75rem;
+    color: rgb(var(--color-text));
+  }
+
+  /* Pencil doodle in each scrap's top corner */
+  .step-doodle {
+    position: absolute;
+    top: 1.35rem;
+    right: 1.25rem;
+    width: 3rem;
+    height: 3rem;
+    background: center / contain no-repeat;
+    opacity: 0.55;
+    pointer-events: none;
+  }
+
+  /* A magnifying glass with a heart in the lens: browsing for a match */
+  .step-doodle--browse {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48' fill='none' stroke='%235c4033' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='20' cy='20' r='12'/%3E%3Cpath d='M29 29l11 11M20 25c-4-3-6-5-4-7.5 1.5-1.8 3.4-1 4 .4.6-1.4 2.5-2.2 4-.4 2 2.5 0 4.5-4 7.5z'/%3E%3C/svg%3E");
+  }
+
+  /* A pencil: filling out the form */
+  .step-doodle--apply {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48' fill='none' stroke='%235c4033' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M10 36 34 12l5 5-24 24-7 2zM30 16l5 5M10 36l5 5M6 44c6 0 8-3 14-3'/%3E%3C/svg%3E");
+  }
+
+  /* A little house with a heart on the door: going home together */
+  .step-doodle--home {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48' fill='none' stroke='%235c4033' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M7 24 24 9l17 15M12 20v20h24V20M24 35c-4-3-6-5-4-7.5 1.5-1.8 3.4-1 4 .4.6-1.4 2.5-2.2 4-.4 2 2.5 0 4.5-4 7.5z'/%3E%3C/svg%3E");
+  }
+}

@@ -1,0 +1,589 @@
+/* Pet notebook: "Looking for a home" as a homemade adoption journal.
+   Paper bookmark tabs poke up out of the pages, one per animal; each
+   animal gets a two-page spread inside a stitched leather cover —
+   snapshots stuck on the left page, details handwritten on the right.
+   Spreads are stacked with only the open one showing; pet-notebook.js
+   turns the pages (3D-hinged copies of them) when a bookmark is picked.
+   On phones each spread folds into one tall page with the spiral down its
+   left edge, and pages swing away over the spiral. */
+
+@layer components {
+  /* Each pet's colour, set via data-tone on its tab and its spread */
+  .pet-notebook [data-tone="mustard"] {
+    --tone: #f7cf78;
+    --tone-deep: rgb(var(--color-primary));
+  }
+
+  .pet-notebook [data-tone="sage"] {
+    --tone: #c8d5bc;
+    --tone-deep: rgb(var(--color-accent));
+  }
+
+  .pet-notebook [data-tone="rose"] {
+    --tone: #f3bba9;
+    --tone-deep: rgb(var(--color-secondary));
+  }
+
+  .pet-notebook [data-tone="kraft"] {
+    --tone: #e4cba1;
+    --tone-deep: var(--color-kraft-dark);
+  }
+
+  /* Its own stacking context: tabs (z 2) tuck in between the cover
+     (below) and the pages (z 3), with the spiral (z 4) over everything. */
+  .pet-notebook {
+    position: relative;
+    isolation: isolate;
+  }
+
+  /* ---------- Bookmark tabs ---------- */
+
+  /* A row of tabs above the cover. The negative margin pulls their lower
+     half down behind the pages, so they read as tucked between leaves. */
+  .nb-tabs {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    gap: 0.4rem;
+    padding-inline: 0.75rem;
+    margin-bottom: -2.1rem;
+  }
+
+  .nb-tab {
+    --tab-tilt: -1deg;
+    position: relative;
+    flex: 1 1 0;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.45rem 0.35rem 2.4rem;
+    font-family: var(--font-heading);
+    font-size: 1.15rem;
+    line-height: 1;
+    color: rgb(var(--color-primary-contrast));
+    background: var(--texture-speckle), var(--texture-mottle), var(--tone);
+    border-radius: 0.55rem 0.8rem 0 0 / 0.55rem 0.8rem 0 0;
+    rotate: var(--tab-tilt);
+    /* Unpicked tabs sit lower, as if tucked further in */
+    translate: 0 0.35rem;
+    cursor: pointer;
+    transition: translate 0.25s var(--ease-out);
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .nb-tab:nth-child(even) {
+    --tab-tilt: 1.25deg;
+  }
+
+  @media (hover: hover) {
+    .nb-tab:hover {
+      translate: 0 0;
+    }
+  }
+
+  /* The picked bookmark stands tall */
+  .nb-tab[aria-selected="true"] {
+    translate: 0 -0.45rem;
+  }
+
+  .nb-tab:focus-visible {
+    outline: 3px solid rgb(var(--color-text));
+    outline-offset: 3px;
+  }
+
+  /* Tiny printed photo of the pet stuck on the tab: a square shot (in a
+     deeper shade of the tab's colour) inside a white photo-paper border,
+     set at a slight angle */
+  .nb-tab-photo {
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 2.25rem;
+    height: 2.25rem;
+    padding: 3px;
+    font-size: 1.1rem;
+    background: linear-gradient(var(--tone-deep), var(--tone-deep)) content-box, var(--print-paper);
+    border: 1px solid var(--print-edge);
+    border-radius: 2px;
+    rotate: -5deg;
+  }
+
+  .nb-tab:nth-child(even) .nb-tab-photo {
+    rotate: 4deg;
+  }
+
+  .nb-tab-name {
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  @media (min-width: 640px) {
+    .nb-tabs {
+      gap: 0.65rem;
+      padding-inline: 2rem;
+      margin-bottom: -2rem;
+    }
+
+    .nb-tab {
+      flex: 0 0 9.5rem;
+      flex-direction: row;
+      justify-content: center;
+      gap: 0.55rem;
+      padding: 0.5rem 0.75rem 2.35rem;
+      font-size: 1.45rem;
+    }
+  }
+
+  /* ---------- Cover ---------- */
+
+  .nb-cover {
+    position: relative;
+    padding: 0.65rem;
+    border-radius: 0.9rem 1.1rem 1rem 0.8rem;
+    background: var(--texture-speckle-light), var(--texture-mottle), var(--color-frame);
+  }
+
+  /* Hand-stitched seam around the cover's edge */
+  .nb-cover::before {
+    content: "";
+    position: absolute;
+    inset: 0.28rem;
+    border: 1.5px dashed rgba(255, 236, 205, 0.45);
+    border-radius: 0.7rem 0.9rem 0.8rem 0.6rem;
+    pointer-events: none;
+  }
+
+  @media (min-width: 640px) {
+    .nb-cover {
+      padding: 0.85rem;
+    }
+
+    .nb-cover::before {
+      inset: 0.38rem;
+    }
+  }
+
+  /* ---------- Pages ---------- */
+
+  /* Every spread is stacked in the same spot (so the notebook is as tall
+     as its tallest spread); only the open one is visible. pan-y leaves
+     vertical swipes to scroll the site while sideways swipes turn pages
+     (pet-notebook.js). */
+  .nb-pages {
+    position: relative;
+    z-index: 3;
+    display: grid;
+    touch-action: pan-y;
+    border-radius: 3px;
+    /* Edges of the pages underneath, peeking out at the bottom-right */
+    box-shadow: 1px 2px 0 -0.5px #f1e7d4, 2px 4px 0 -1px #e3d6bd, 3px 6px 0 -1.5px #d4c4a6;
+  }
+
+  .nb-spread {
+    grid-area: 1 / 1;
+    display: grid;
+  }
+
+  .nb-spread:not(.is-open) {
+    visibility: hidden;
+  }
+
+  @media (min-width: 768px) {
+    .nb-spread {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  /* ---------- Turning leaves (built by pet-notebook.js mid-turn) ---------- */
+
+  /* A sheet hinged on one edge and turned with rotateY. With no
+     perspective it stays flat: the leaf narrows toward its hinge, then
+     opens out on the other side. Its faces are copies of real pages;
+     backface-visibility shows whichever side is up. */
+  .nb-leaf {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    transform-style: preserve-3d;
+    pointer-events: none;
+  }
+
+  .nb-leaf--right {
+    left: 50%;
+    width: 50%;
+    transform-origin: left center;
+  }
+
+  .nb-leaf--left {
+    left: 0;
+    width: 50%;
+    transform-origin: right center;
+  }
+
+  .nb-leaf--full {
+    left: 0;
+    width: 100%;
+    transform-origin: left center;
+  }
+
+  .nb-leaf-face {
+    position: absolute;
+    inset: 0;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+  }
+
+  .nb-leaf-face--back {
+    transform: rotateY(180deg);
+  }
+
+  .nb-leaf-face > :first-child {
+    height: 100%;
+  }
+
+  /* Copies are frozen: reveal animations and transitions mustn't replay on them */
+  .nb-leaf *,
+  .nb-leaf *::before,
+  .nb-leaf *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  /* A flat tint that deepens as a leaf turns edge-on, so the turn reads
+     without any shading gradients */
+  .nb-leaf-shade {
+    position: absolute;
+    inset: 0;
+    background: rgba(92, 64, 51, 0.16);
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  /* ---------- Paper ---------- */
+
+  /* Cream paper: print grain and mottling, a terracotta margin line, and
+     faint ruled lines that start below a blank header strip. A flat,
+     slightly darker band marks the spine side. */
+  .nb-page {
+    --rule: 2rem;
+    --rule-top: 3rem;
+    --margin-x: 2.75rem;
+    position: relative;
+    /* Keeps the snapshots' and stickers' z-indexes inside the page, so
+       nothing on an open page pokes up through a leaf turning over it */
+    isolation: isolate;
+    --spine-band: linear-gradient(to right, rgba(92, 64, 51, 0.07) 0 1.1rem, transparent 1.1rem);
+    background: var(--spine-band), var(--texture-speckle), var(--texture-mottle),
+      linear-gradient(
+        to right,
+        transparent calc(var(--margin-x) - 1px),
+        var(--color-page-margin) calc(var(--margin-x) - 1px) calc(var(--margin-x) + 1px),
+        transparent calc(var(--margin-x) + 1px)
+      ),
+      repeating-linear-gradient(
+          to bottom,
+          transparent 0 calc(var(--rule) - 1px),
+          var(--color-page-rule) calc(var(--rule) - 1px) var(--rule)
+        )
+        0 var(--rule-top) / 100% calc(100% - var(--rule-top)) no-repeat,
+      var(--color-page);
+  }
+
+  /* On a two-page spread the left page's spine is on its right */
+  @media (min-width: 768px) {
+    .nb-page--photos {
+      --spine-band: linear-gradient(to left, rgba(92, 64, 51, 0.07) 0 1.1rem, transparent 1.1rem);
+    }
+  }
+
+  /* ---------- Left page: snapshots ---------- */
+
+  /* Tall enough on phones that the stacked snapshots' captions don't collide */
+  .nb-page--photos {
+    min-height: 25rem;
+  }
+
+  @media (min-width: 768px) {
+    .nb-page--photos {
+      min-height: 32rem;
+    }
+  }
+
+  /* A printed snapshot: the shot inside a white photo-paper border with
+     a handwritten caption. Smooth white paper and a crisp edge set it
+     apart from the textured page it's stuck to. It's a size container so
+     its emoji and caption scale with it. */
+  .nb-photo {
+    --photo-tilt: 0deg;
+    position: absolute;
+    container-type: inline-size;
+    margin: 0;
+    padding: 5% 5% 0;
+    background: var(--print-paper);
+    border: 1.5px solid var(--print-edge);
+    border-radius: var(--print-radius);
+    rotate: var(--photo-tilt);
+  }
+
+  .nb-photo figcaption {
+    padding: 0.3em 0 0.45em;
+    font-family: var(--font-heading);
+    font-size: max(1rem, 9cqi);
+    line-height: 1.1;
+    text-align: center;
+    color: rgb(var(--color-text));
+  }
+
+  .nb-photo-img {
+    position: relative;
+    display: grid;
+    place-items: center;
+    aspect-ratio: 1;
+    font-size: 42cqi;
+    line-height: 1;
+    /* Flat illustration: the pet in front of a pale circle on a solid tone */
+    background: var(--texture-speckle),
+      radial-gradient(circle at 50% 52%, rgba(255, 255, 255, 0.35) 0 33%, transparent 33.5%), var(--tone);
+    /* Crisp hairline where the picture meets the white border */
+    box-shadow: var(--print-keyline);
+  }
+
+  /* The prop in a snapshot (tennis ball, sunbeam…) in the corner of the shot */
+  .nb-photo-prop {
+    position: absolute;
+    right: 8%;
+    bottom: 6%;
+    font-size: 0.42em;
+    rotate: 12deg;
+  }
+
+  /* Where each snapshot sits on the page; overlapping like a real collage */
+  .nb-photo--main {
+    --photo-tilt: -3.5deg;
+    z-index: 2;
+    left: 9%;
+    top: 9%;
+    width: 50%;
+  }
+
+  .nb-photo--a {
+    --photo-tilt: 5deg;
+    right: 7%;
+    top: 7%;
+    width: 34%;
+  }
+
+  .nb-photo--b {
+    --photo-tilt: -2deg;
+    right: 11%;
+    bottom: 8%;
+    width: 36%;
+  }
+
+  /* Washi tape across the main photo's top corners */
+  .nb-tape-left,
+  .nb-tape-right {
+    width: 70px;
+    height: 22px;
+    top: -9px;
+  }
+
+  .nb-tape-left {
+    left: -16px;
+    border-radius: 2px 6px 3px 7px;
+    transform: rotate(-32deg);
+  }
+
+  .nb-tape-right {
+    right: -16px;
+    border-radius: 6px 2px 7px 3px;
+    transform: rotate(34deg);
+  }
+
+  /* Little round flat die-cut stickers holding snapshots down */
+  .nb-sticker {
+    --nb-sticker-tilt: -12deg;
+    position: absolute;
+    z-index: 3;
+    display: grid;
+    place-items: center;
+    width: 2.4rem;
+    height: 2.4rem;
+    font-size: 1.05rem;
+    line-height: 1;
+    color: #fff;
+    border: 3px solid #fff;
+    border-radius: 50%;
+    background: var(--nb-sticker-fill);
+    box-shadow: 0 0 0 1px rgba(92, 64, 51, 0.35);
+    rotate: var(--nb-sticker-tilt);
+  }
+
+  .nb-sticker--heart {
+    --nb-sticker-fill: rgb(var(--color-secondary-deep));
+    top: -1rem;
+    left: calc(50% - 1.2rem);
+  }
+
+  .nb-sticker--paw {
+    --nb-sticker-fill: rgb(var(--color-accent));
+    --nb-sticker-tilt: 14deg;
+    top: -0.9rem;
+    right: -0.8rem;
+    font-size: 0.95rem;
+  }
+
+  /* Scrapbook photo corners: paper triangles the snapshot is slotted into */
+  .nb-photo--cornered::before,
+  .nb-photo--cornered::after {
+    content: "";
+    position: absolute;
+    z-index: 2;
+    width: 1.6rem;
+    height: 1.6rem;
+    background: var(--color-frame-dark);
+  }
+
+  .nb-photo--cornered::before {
+    top: -0.3rem;
+    left: -0.3rem;
+    clip-path: polygon(0 0, 100% 0, 0 100%);
+  }
+
+  .nb-photo--cornered::after {
+    right: -0.3rem;
+    bottom: -0.3rem;
+    clip-path: polygon(100% 0, 100% 100%, 0 100%);
+  }
+
+  /* Pencilled note in the corner of the photo page */
+  .nb-scribble {
+    position: absolute;
+    left: 10%;
+    bottom: 6%;
+    font-family: var(--font-heading);
+    font-size: 1.4rem;
+    color: rgb(var(--color-secondary-deep));
+    rotate: -6deg;
+  }
+
+  /* ---------- Right page: the pet's details, written on the lines ---------- */
+
+  /* Every line-height is a multiple of --rule, so the handwriting sits on
+     the ruled lines. */
+  .nb-page--details {
+    padding: var(--rule-top) 1.25rem 2.75rem calc(var(--margin-x) + 0.75rem);
+    font-family: var(--font-heading);
+    color: rgb(var(--color-text));
+  }
+
+  .nb-kicker {
+    position: absolute;
+    top: 1.1rem;
+    left: calc(var(--margin-x) + 0.75rem);
+    font-family: var(--font-body);
+    font-size: 0.7rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgb(var(--color-text) / 0.8);
+  }
+
+  .nb-name {
+    font-size: 3.25rem;
+    line-height: calc(var(--rule) * 2);
+  }
+
+  /* Labels in "pencil", answers in "ink" */
+  .nb-facts > div {
+    display: flex;
+    align-items: baseline;
+    gap: 0.6rem;
+    line-height: var(--rule);
+  }
+
+  .nb-facts dt,
+  .nb-notes-label {
+    font-size: 1.25rem;
+    color: rgb(var(--color-text) / 0.75);
+  }
+
+  .nb-facts dt::after {
+    content: ":";
+  }
+
+  .nb-facts dd {
+    font-size: 1.6rem;
+  }
+
+  .nb-notes {
+    font-size: 1.45rem;
+    line-height: var(--rule);
+  }
+
+  .nb-cta {
+    margin-top: 1.25rem;
+  }
+
+  .nb-page-number {
+    position: absolute;
+    right: 1.5rem;
+    bottom: 0.6rem;
+    font-size: 1.3rem;
+    color: rgb(var(--color-text) / 0.6);
+  }
+
+  /* A pencil doodle of paw prints wandering off the bottom of the page */
+  .nb-page--details::after {
+    content: "";
+    position: absolute;
+    right: 1.75rem;
+    bottom: 2.75rem;
+    width: 4.5rem;
+    height: 3.25rem;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 72 52' fill='none' stroke='%235c4033' stroke-width='1.6' stroke-linecap='round'%3E%3Cg transform='rotate(-20 18 38)'%3E%3Cpath d='M12 40c0-5 3-8 6-8s6 3 6 8c0 3-3 4-6 4s-6-1-6-4z'/%3E%3Ccircle cx='10' cy='31' r='2.4'/%3E%3Ccircle cx='15' cy='27' r='2.4'/%3E%3Ccircle cx='21' cy='27' r='2.4'/%3E%3Ccircle cx='26' cy='31' r='2.4'/%3E%3C/g%3E%3Cg transform='rotate(-20 52 16)'%3E%3Cpath d='M46 18c0-5 3-8 6-8s6 3 6 8c0 3-3 4-6 4s-6-1-6-4z'/%3E%3Ccircle cx='44' cy='9' r='2.4'/%3E%3Ccircle cx='49' cy='5' r='2.4'/%3E%3Ccircle cx='55' cy='5' r='2.4'/%3E%3Ccircle cx='60' cy='9' r='2.4'/%3E%3C/g%3E%3C/svg%3E")
+      center / contain no-repeat;
+    opacity: 0.3;
+    pointer-events: none;
+  }
+
+  /* ---------- Spiral binding ---------- */
+
+  /* A flat, outlined wire coil looping through punched holes. Phones: down the left
+     edge, with the far loop clipped where it wraps behind the cover.
+     Wider screens: down the spine between the two pages. */
+  .nb-spiral {
+    position: absolute;
+    z-index: 4;
+    top: 1.1rem;
+    bottom: 1.1rem;
+    left: -1rem;
+    width: 48px;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='28' viewBox='0 0 48 28'%3E%3Cellipse cx='10' cy='18' rx='3.2' ry='3.6' fill='%233b2a1f'/%3E%3Cellipse cx='38' cy='18' rx='3.2' ry='3.6' fill='%233b2a1f'/%3E%3Cpath d='M10 18C10 4 38 4 38 18' stroke='%236e665c' stroke-width='4.2' stroke-linecap='round' fill='none'/%3E%3Cpath d='M10 18C10 4 38 4 38 18' stroke='%23cfc8bc' stroke-width='2.2' stroke-linecap='round' fill='none'/%3E%3C/svg%3E")
+      0 0 / 48px 28px repeat-y;
+    clip-path: inset(0 0 0 16px);
+    pointer-events: none;
+  }
+
+  @media (min-width: 768px) {
+    .nb-spiral {
+      left: calc(50% - 24px);
+      clip-path: none;
+    }
+  }
+}
+
+/* Real pet photos fill the polaroid and the bookmark tab */
+.nb-photo-img--real {
+  overflow: hidden;
+}
+.nb-photo-img--real img,
+.nb-tab-photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}

@@ -1,68 +1,271 @@
-/* Corkboard pet card: a wooden frame around a speckled cork texture,
-   with a "photo" pinned to it. Used for the adoptable-pets grid. */
+/* Craft cards: the donation box, volunteer poster, and testimonial notes,
+   plus the washi tape and marker squiggles shared across the page. */
 
 @layer components {
-  .cork-card {
-    --tilt: 0deg;
+  /* Donation card: a cardboard collection box, taped shut in a hurry,
+     with a hand-cut coin slot and a marker-scrawled heading. */
+  .craft-donate {
+    --craft-tilt: -1.25deg;
+    /* Flat cardboard: corrugation lines, flecks, and uneven tone. Painted
+       with hand-cut edges by .rough-paper (paper-texture.css). */
+    --surface: repeating-linear-gradient(90deg, rgba(74, 45, 25, 0.08) 0 2px, transparent 2px 16px),
+      var(--texture-speckle), var(--texture-mottle), #d4b27e;
     position: relative;
-    transform: rotate(var(--tilt));
-    border-radius: 1.25rem;
-    padding: 0.55rem;
-    background: linear-gradient(160deg, var(--color-frame), var(--color-frame-dark));
-    box-shadow: var(--shadow-soft);
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    transform: rotate(var(--craft-tilt));
+    border-radius: 6px 26px 10px 30px / 22px 8px 30px 10px;
   }
 
-  .cork-card:hover,
-  .cork-card:focus-within {
-    transform: rotate(0deg) scale(1.035);
-    box-shadow: 0 16px 32px -10px rgba(74, 45, 25, 0.45);
-  }
-
-  .cork-card-board {
-    position: relative;
-    border-radius: 0.85rem;
-    padding: 1.75rem 1.1rem 1.1rem;
-    background-color: var(--color-cork);
-    background-image: radial-gradient(circle at 15% 20%, rgba(255, 255, 255, 0.12) 0, transparent 3px),
-      radial-gradient(circle at 82% 12%, rgba(0, 0, 0, 0.14) 0, transparent 2.5px),
-      radial-gradient(circle at 40% 55%, rgba(0, 0, 0, 0.12) 0, transparent 2px),
-      radial-gradient(circle at 68% 78%, rgba(255, 255, 255, 0.1) 0, transparent 2.5px),
-      radial-gradient(circle at 22% 85%, rgba(0, 0, 0, 0.12) 0, transparent 2px),
-      radial-gradient(circle at 90% 55%, rgba(0, 0, 0, 0.1) 0, transparent 2px),
-      radial-gradient(circle at 55% 30%, rgba(0, 0, 0, 0.08) 0, transparent 1.5px);
-    box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.25);
-  }
-
-  .cork-pin {
+  /* Shared "washi tape" strip. Sized and offset to spill past the card's
+     own edge onto the page behind it, so it reads as taped to the
+     background rather than clipped inside the card. */
+  .craft-tape {
     position: absolute;
-    top: -8px;
-    left: 50%;
-    width: 16px;
-    height: 16px;
-    border-radius: 50%;
-    transform: translateX(-50%);
-    background: radial-gradient(circle at 32% 28%, #fff, var(--color-pin) 55%, rgba(0, 0, 0, 0.45) 100%);
-    box-shadow: 0 3px 4px rgba(0, 0, 0, 0.45);
-    z-index: 2;
+    background: repeating-linear-gradient(
+        45deg,
+        rgba(255, 255, 255, 0.65) 0 6px,
+        rgba(255, 255, 255, 0.32) 6px 12px
+      ),
+      var(--tape-tint, rgba(255, 255, 255, 0.72));
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    z-index: 3;
   }
 
-  .cork-photo {
-    display: block;
-    width: fit-content;
-    margin: 0 auto 1rem;
-    background: #fff;
-    padding: 0.5rem 0.5rem 1.1rem;
-    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.3);
+  /* Each strip below is sized, shaped, and angled a little differently —
+     no two pieces of tape torn off the same roll look quite alike. */
+  .craft-tape--donate-tl {
+    width: 104px;
+    height: 32px;
+    top: -14px;
+    left: -21px;
+    border-radius: 2px 7px 3px 8px;
+    transform: rotate(-36deg);
   }
 
-  .cork-photo-frame {
+  .craft-tape--donate-br {
     width: 84px;
-    height: 84px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 2.5rem;
-    background: rgb(var(--color-bg));
+    height: 25px;
+    bottom: -19px;
+    right: -11px;
+    border-radius: 6px 2px 7px 3px;
+    transform: rotate(-53deg);
   }
+
+  .craft-tape--poster-tl {
+    width: 132px;
+    height: 22px;
+    top: -9px;
+    left: -25px;
+    border-radius: 4px 3px 6px 2px;
+    transform: rotate(-29deg);
+  }
+
+  .craft-tape--poster-br {
+    width: 94px;
+    height: 37px;
+    bottom: -22px;
+    right: -17px;
+    border-radius: 3px 7px 2px 6px;
+    transform: rotate(-59deg);
+  }
+
+  .craft-tape--note-1 {
+    width: 70px;
+    height: 27px;
+    top: -13px;
+    left: 40%;
+    border-radius: 3px 6px 2px 7px;
+    transform: translateX(-50%) rotate(7deg);
+  }
+
+  .craft-tape--note-2 {
+    width: 102px;
+    height: 17px;
+    top: -8px;
+    left: 58%;
+    border-radius: 7px 2px 6px 3px;
+    transform: translateX(-50%) rotate(-9deg);
+  }
+
+  .craft-tape--polaroid {
+    width: 112px;
+    height: 30px;
+    top: -15px;
+    left: 50%;
+    border-radius: 3px 7px 2px 6px;
+    transform: translateX(-50%) rotate(-3deg);
+  }
+
+  .craft-tape--quote {
+    width: 96px;
+    height: 26px;
+    top: -12px;
+    left: 1.5rem;
+    border-radius: 6px 2px 7px 3px;
+    transform: rotate(-6deg);
+  }
+
+  .craft-tape--sheet {
+    width: 92px;
+    height: 24px;
+    top: -10px;
+    left: 50%;
+    border-radius: 3px 6px 2px 7px;
+    transform: translateX(-50%) rotate(-4deg);
+  }
+
+  .craft-tape--strip-l {
+    width: 84px;
+    height: 24px;
+    top: -10px;
+    left: -18px;
+    border-radius: 2px 6px 3px 7px;
+    transform: rotate(-24deg);
+  }
+
+  .craft-tape--strip-r {
+    width: 76px;
+    height: 26px;
+    bottom: -10px;
+    right: -16px;
+    border-radius: 7px 3px 6px 2px;
+    transform: rotate(-20deg);
+  }
+
+  .craft-tape--sage {
+    --tape-tint: rgba(138, 161, 126, 0.62);
+  }
+
+  .craft-tape--mustard {
+    --tape-tint: rgba(244, 168, 37, 0.62);
+  }
+
+  .craft-tape--rose {
+    --tape-tint: rgba(224, 122, 95, 0.62);
+  }
+
+  .craft-slot {
+    width: 72px;
+    height: 14px;
+    margin: 0 auto 1.1rem;
+    background: #3a2415;
+    border-radius: 50%;
+    transform: rotate(-3deg);
+    /* Flat pale lip along the cut's lower edge */
+    border-bottom: 2px solid rgba(255, 240, 220, 0.45);
+  }
+
+  .craft-heading {
+    display: inline-block;
+    position: relative;
+  }
+
+  .craft-heading::after {
+    content: "";
+    position: absolute;
+    left: -2px;
+    right: -2px;
+    bottom: -3px;
+    height: 6px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='6' viewBox='0 0 24 6'%3E%3Cpath d='M0 3 Q6 0 12 3 T24 3' stroke='%234a2d19' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: repeat-x;
+    background-size: 16px 6px;
+    opacity: 0.6;
+  }
+
+  /* Squiggle variant for headings sitting on a dark/colored background. */
+  .craft-heading--light::after {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='6' viewBox='0 0 24 6'%3E%3Cpath d='M0 3 Q6 0 12 3 T24 3' stroke='%23ffffff' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    opacity: 0.75;
+  }
+
+  /* Bigger terracotta marker squiggle for the page's section headings. */
+  .craft-heading--marker::after {
+    left: 0;
+    right: 0;
+    bottom: -6px;
+    height: 10px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='10' viewBox='0 0 24 10'%3E%3Cpath d='M0 5 Q6 1 12 5 T24 5' stroke='%23e07a5f' stroke-width='2.4' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-size: 20px 10px;
+    opacity: 0.9;
+  }
+
+  /* Hand-drawn highlighter swoosh behind a key phrase in the hero
+     headline. nowrap keeps the phrase (and its swoosh) on one line. */
+  .marker-swash {
+    position: relative;
+    display: inline-block;
+    white-space: nowrap;
+    isolation: isolate;
+  }
+
+  .marker-swash::after {
+    content: "";
+    position: absolute;
+    left: -0.08em;
+    right: -0.12em;
+    bottom: 0.04em;
+    height: 0.4em;
+    z-index: -1;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 24' preserveAspectRatio='none'%3E%3Cpath d='M3 15C40 7 130 3 197 8L195 17C130 13 50 16 6 22Z' fill='%23f4a825' fill-opacity='0.8'/%3E%3C/svg%3E")
+      center / 100% 100% no-repeat;
+  }
+
+  /* Volunteer card: a poster pinned up in a hurry — same wobble-and-tape
+     system as the donation box, without the cardboard. */
+  .craft-poster {
+    --craft-tilt: 1.4deg;
+    /* Flat terracotta poster paper with faint stripes and cream flecks. The
+       deeper terracotta keeps its white text above WCAG AA contrast. */
+    --surface: repeating-linear-gradient(-35deg, rgba(255, 255, 255, 0.07) 0 3px, transparent 3px 18px),
+      var(--texture-speckle-light), var(--texture-mottle), rgb(var(--color-secondary-deep));
+    position: relative;
+    transform: rotate(var(--craft-tilt));
+    border-radius: 26px 8px 30px 10px / 10px 26px 8px 30px;
+  }
+
+  /* Index cards (testimonials, the About motto) taped to the page instead
+     of plain bordered blockquotes: ruled lines on textured card stock. */
+  .craft-note {
+    --craft-tilt: -1deg;
+    --surface: repeating-linear-gradient(rgba(92, 64, 51, 0.1) 0 1px, transparent 1px 26px),
+      var(--texture-speckle), var(--texture-mottle), var(--note-paper, #fffaf0);
+    position: relative;
+    transform: rotate(var(--craft-tilt));
+    border-radius: 4px 18px 6px 20px / 18px 6px 20px 4px;
+  }
+
+  /* Tinted card stock, so cards stand apart from the cream page without shadows */
+  .craft-note--sage {
+    --note-paper: #e9efe1;
+  }
+
+  .craft-note--rose {
+    --note-paper: #f9e5dc;
+  }
+
+  .craft-note:nth-of-type(2) {
+    --craft-tilt: 1.25deg;
+  }
+}
+
+/* About: a taped-in photo above the quote */
+.craft-photo {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin-bottom: 1.5rem;
+  box-shadow: var(--print-keyline);
+}
+
+/* Testimonials: a small round avatar beside the name */
+.testimonial-author {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.testimonial-avatar {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  flex: none;
 }

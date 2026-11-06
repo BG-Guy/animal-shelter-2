@@ -1,32 +1,83 @@
+// Renders the "Looking for a home" notebook from data/pets.js: a bookmark
+// tab per pet into #pet-tabs, and a two-page spread per pet into
+// #pet-pages (snapshots on the left page, details on the right).
+// Turning pages is handled by pet-notebook.js; styles in pet-notebook.css.
 import { pets } from "../data/pets.js";
 
-const TILTS = ["-3deg", "2deg", "-1.5deg", "2.5deg"];
+// Each pet's colour, cycled: tints its bookmark and its photo backdrops
+const TONES = ["mustard", "sage", "rose", "kraft"];
+// Washi tape that contrasts with each tone
+const TAPE_FOR_TONE = { mustard: "sage", sage: "rose", rose: "mustard", kraft: "sage" };
 
-function petCard(pet, index) {
-  const card = document.createElement("article");
-  card.className = "cork-card";
-  card.style.setProperty("--tilt", TILTS[index % TILTS.length]);
-  card.innerHTML = `
-    <div class="cork-card-board">
-      <div class="cork-pin" aria-hidden="true"></div>
-      <div class="cork-photo">
-        <div class="cork-photo-frame" aria-hidden="true">${pet.emoji}</div>
+const slug = (name) => name.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+
+// A paper bookmark poking out of the notebook: mini photo + handwritten name
+function bookmarkTab(pet, index) {
+  const id = slug(pet.name);
+  return `
+    <button type="button" role="tab" id="pet-tab-${id}" class="nb-tab"
+      aria-controls="pet-page-${id}" aria-selected="false" tabindex="-1"
+      data-tone="${TONES[index % TONES.length]}" style="--tab-i: ${index}">
+      <span class="nb-tab-photo" aria-hidden="true"><img src="${pet.photo.replace(".webp", "-tab.webp")}" alt="" width="96" height="96" loading="lazy" decoding="async"></span>
+      <span class="nb-tab-name">${pet.name}</span>
+    </button>`;
+}
+
+// One extra snapshot of the pet (a photo, or its emoji with a prop); `holder` is how it's stuck down
+function snapshot(pet, photo, slotClass, holder) {
+  if (!photo) return "";
+  return `
+    <figure class="nb-photo ${slotClass}">
+      ${holder}
+      ${photo.src
+        ? `<div class="nb-photo-img nb-photo-img--real"><img src="${photo.src}" alt="${photo.alt}" width="480" height="480" loading="lazy" decoding="async"></div>`
+        : `<div class="nb-photo-img" aria-hidden="true">${pet.emoji}<span class="nb-photo-prop">${photo.prop}</span></div>`}
+      <figcaption>${photo.caption}</figcaption>
+    </figure>`;
+}
+
+// A pet's spread: the photo page (left) and the details page (right)
+function spread(pet, index) {
+  const id = slug(pet.name);
+  const tone = TONES[index % TONES.length];
+  const tape = TAPE_FOR_TONE[tone];
+  const [first, second] = pet.photos ?? [];
+
+  return `
+    <article role="tabpanel" id="pet-page-${id}" class="nb-spread"
+      aria-labelledby="pet-tab-${id}" data-tone="${tone}">
+      <div class="nb-page nb-page--photos">
+        ${snapshot(pet, first, "nb-photo--a", '<span class="nb-sticker nb-sticker--heart" aria-hidden="true">♥</span>')}
+        ${snapshot(pet, second, "nb-photo--b nb-photo--cornered", '<span class="nb-sticker nb-sticker--paw" aria-hidden="true">🐾</span>')}
+        <figure class="nb-photo nb-photo--main">
+          <span class="craft-tape craft-tape--${tape} nb-tape-left" aria-hidden="true"></span>
+          <span class="craft-tape craft-tape--${tape} nb-tape-right" aria-hidden="true"></span>
+          <div class="nb-photo-img nb-photo-img--real"><img src="${pet.photo}" alt="${pet.photoAlt}" width="640" height="640" loading="lazy" decoding="async"></div>
+          <figcaption>${pet.name}</figcaption>
+        </figure>
+        <p class="nb-scribble" aria-hidden="true">snapshots ♥</p>
       </div>
-      <div class="bg-brand-bg/95 rounded-xl p-4 flex flex-col shadow-soft">
-        <h3 class="font-heading text-heading-3 text-brand-text leading-none mb-1">${pet.name}</h3>
-        <p class="text-sm text-brand-text-muted mb-3">${pet.breed} · ${pet.age}</p>
-        <p class="text-sm text-brand-text/90 mb-4 flex-1">${pet.blurb}</p>
-        <button type="button" class="w-full py-2 rounded-full text-sm font-semibold bg-brand-secondary text-brand-secondary-contrast hover:brightness-95 transition">
-          Meet ${pet.name}
-        </button>
+
+      <div class="nb-page nb-page--details">
+        <p class="nb-kicker">Adoption file no. ${index + 1}</p>
+        <h3 class="nb-name"><span class="marker-swash">${pet.name}</span></h3>
+        <dl class="nb-facts">
+          <div><dt>Species</dt><dd>${pet.species}</dd></div>
+          <div><dt>Breed</dt><dd>${pet.breed}</dd></div>
+          <div><dt>Age</dt><dd>${pet.age}</dd></div>
+        </dl>
+        <p class="nb-notes"><span class="nb-notes-label">Notes:</span> ${pet.blurb}</p>
+        <button type="button" class="sticker sticker--terracotta nb-cta">Meet ${pet.name}</button>
+        <p class="nb-page-number" aria-hidden="true">${index + 1}</p>
       </div>
-    </div>
-  `;
-  return card;
+    </article>`;
 }
 
 export function renderPets() {
-  const grid = document.getElementById("pets-grid");
-  if (!grid) return;
-  pets.forEach((pet, index) => grid.appendChild(petCard(pet, index)));
+  const tabs = document.getElementById("pet-tabs");
+  const pages = document.getElementById("pet-pages");
+  if (!tabs || !pages) return;
+
+  tabs.innerHTML = pets.map(bookmarkTab).join("");
+  pages.innerHTML = pets.map(spread).join("");
 }

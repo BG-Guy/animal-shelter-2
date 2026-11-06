@@ -5,11 +5,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Furever Home — Animal Shelter</title>
   <meta name="description" content="Furever Home is a small, volunteer-run animal shelter. Meet adoptable dogs, cats and rabbits, volunteer, or donate to help them find a home." />
+  <!-- Link previews (Open Graph / X). Absolute URL: assumes the GitHub Pages address. -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Furever Home — Animal Shelter" />
+  <meta property="og:description" content="A small, volunteer-run animal shelter. Meet adoptable dogs, cats and rabbits, volunteer, or donate to help them find a home." />
+  <meta property="og:image" content="https://bg-guy.github.io/animal-shelter-2/images/og-image.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="A golden mixed-breed dog sitting with a tilted head and a red collar" />
+  <meta name="twitter:card" content="summary_large_image" />
   <link rel="stylesheet" href="./assets/fonts/fonts.css" />
   <link rel="stylesheet" href="./dist/output.css" />
 </head>
 <body class="bg-brand-bg text-brand-text font-body antialiased">
-  <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:top-4 focus:left-4 focus:bg-brand-surface focus:px-4 focus:py-2 focus:rounded-full focus:shadow-soft">
+  <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:top-4 focus:left-4 focus:bg-brand-surface focus:px-4 focus:py-2 focus:rounded-full focus:ring-2 focus:ring-brand-text">
     Skip to content
   </a>
 
@@ -45,7 +54,7 @@
         <div
           id="nav-menu"
           aria-hidden="true"
-          class="fixed sm:static top-0 right-0 z-50 h-full sm:h-auto w-72 max-w-[80%] sm:w-auto translate-x-full sm:translate-x-0 flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-8 bg-brand-bg sm:bg-transparent shadow-soft sm:shadow-none px-6 sm:px-0 pt-20 sm:pt-0 pb-6 font-semibold text-sm transition-transform duration-300 ease-out"
+          class="fixed sm:static top-0 right-0 z-50 h-full sm:h-auto w-72 max-w-[80%] sm:w-auto translate-x-full sm:translate-x-0 flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-8 bg-brand-bg sm:bg-transparent border-l border-brand-border sm:border-0 px-6 sm:px-0 pt-20 sm:pt-0 pb-6 sm:pb-0 font-semibold text-sm transition-transform duration-300 ease-out"
         >
           <button
             id="nav-close"
@@ -57,160 +66,197 @@
               <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
             </svg>
           </button>
-          <a href="#pets" class="py-2 sm:py-0 hover:text-brand-secondary transition">Adopt</a>
-          <a href="#how-it-works" class="py-2 sm:py-0 hover:text-brand-secondary transition">How it works</a>
-          <a href="#about" class="py-2 sm:py-0 hover:text-brand-secondary transition">About</a>
-          <a href="#get-involved" class="py-2 sm:py-0 hover:text-brand-secondary transition">Get involved</a>
+          <a href="#pets" class="py-2 sm:py-0">Adopt</a>
+          <a href="#how-it-works" class="py-2 sm:py-0">How it works</a>
+          <a href="#about" class="py-2 sm:py-0">About</a>
+          <a href="#get-involved" class="py-2 sm:py-0">Get involved</a>
         </div>
       </nav>
     </header>
 
     <main id="main">
-      <!-- Hero -->
-      <section id="top" class="container max-w-container pt-10 pb-16 sm:pt-16 sm:pb-24 grid sm:grid-cols-2 gap-10 items-center">
+      <!-- Hero: the pitch on the left, Buddy's polaroid taped up on the right.
+           Every block reveals on load, staggered, so the page assembles itself. -->
+      <section id="top" class="container max-w-container pt-10 pb-16 sm:pt-16 sm:pb-20 grid sm:grid-cols-2 gap-12 sm:gap-10 items-center">
         <div>
-          <p class="uppercase tracking-[0.2em] text-xs text-brand-text-muted mb-3">Volunteer-run · Local shelter</p>
-          <h1 class="font-heading text-hero leading-[1.05] mb-5">
-            Every paw deserves a home to run home to.
+          <p class="uppercase tracking-[0.2em] text-xs text-brand-text-muted mb-3" data-reveal>Volunteer-run · Local shelter</p>
+          <h1 class="font-heading text-hero leading-[1.05] mb-5" data-reveal>
+            Every paw deserves a <span class="marker-swash">home</span> to run home to.
           </h1>
-          <p class="text-brand-text/90 mb-7 max-w-md">
+          <p class="text-brand-text/90 mb-8 max-w-md" data-reveal>
             We're a small, volunteer-run shelter that believes every dog, cat, and
             bunny deserves a soft bed, a full bowl, and a family who shows up.
           </p>
-          <div class="flex flex-wrap gap-3">
-            <a href="#pets" class="wag px-6 py-3 rounded-full font-semibold shadow-soft bg-brand-primary text-brand-primary-contrast">
-              Meet the animals →
+          <div class="flex flex-wrap items-center gap-4" data-reveal>
+            <a href="#pets" class="sticker sticker--lg">
+              Meet the animals <span class="sticker-arrow" aria-hidden="true">→</span>
             </a>
-            <a href="#get-involved" class="wag px-6 py-3 rounded-full font-semibold border-2 border-brand-secondary text-brand-secondary">
+            <a href="#get-involved" class="sticker sticker--kraft sticker--lg sticker--tilt-right">
               Donate
             </a>
           </div>
         </div>
 
-        <div class="bg-brand-surface rounded-3xl p-6 border border-brand-border shadow-soft" data-reveal>
-          <div class="flex items-center gap-4">
-            <div class="w-16 h-16 rounded-full bg-brand-primary/20 flex items-center justify-center text-3xl" aria-hidden="true">🐶</div>
-            <div>
-              <p class="font-heading text-heading-3 leading-none">Buddy</p>
-              <p class="text-sm text-brand-text-muted">Labrador mix · 2 yrs old</p>
+        <div class="polaroid-stack" data-reveal>
+          <div class="polaroid polaroid--behind" aria-hidden="true">
+            <div class="polaroid-photo polaroid-photo--sage polaroid-photo--real"><img src="images/hero-willow.webp" alt="" width="800" height="600" decoding="async"></div>
+            <p class="polaroid-caption">Willow</p>
+          </div>
+          <article class="polaroid">
+            <div class="craft-tape craft-tape--sage craft-tape--polaroid" aria-hidden="true"></div>
+            <div class="polaroid-photo polaroid-photo--real"><img src="images/hero-buddy.webp" alt="Buddy, a yellow Labrador mix, sitting with a tennis ball in his mouth" width="800" height="600" fetchpriority="high" decoding="async"></div>
+            <p class="polaroid-caption">Buddy</p>
+            <p class="text-sm text-brand-text-muted mt-1">Labrador mix · 2 yrs old</p>
+            <p class="polaroid-note">
+              "Buddy loves belly rubs, tennis balls, and greeting everyone like
+              they're his best friend."
+            </p>
+            <a href="#pets" class="sticker sticker--terracotta polaroid-sticker">Adopt Buddy</a>
+          </article>
+        </div>
+      </section>
+
+      <!-- Stats: a kraft-paper strip of figures taped across the page; the
+           numbers count up from zero when it scrolls into view (count-up.js) -->
+      <section class="container max-w-container pb-20 sm:pb-28">
+        <div class="stat-strip rough-paper" data-reveal>
+          <div class="craft-tape craft-tape--mustard craft-tape--strip-l" aria-hidden="true"></div>
+          <div class="craft-tape craft-tape--rose craft-tape--strip-r" aria-hidden="true"></div>
+          <dl class="stat-strip-grid">
+            <div class="stat">
+              <dt class="stat-label">Animals adopted</dt>
+              <dd class="stat-value" data-count-up>312</dd>
+            </div>
+            <div class="stat">
+              <dt class="stat-label">Years running</dt>
+              <dd class="stat-value" data-count-up>9</dd>
+            </div>
+            <div class="stat">
+              <dt class="stat-label">Volunteers</dt>
+              <dd class="stat-value" data-count-up>48</dd>
+            </div>
+            <div class="stat">
+              <dt class="stat-label">Partner vets</dt>
+              <dd class="stat-value" data-count-up>6</dd>
+            </div>
+          </dl>
+        </div>
+      </section>
+
+      <!-- Featured pets: a homemade adoption notebook on a sunny torn-paper
+           band. pets.js fills in a bookmark tab and a two-page spread per
+           animal; pet-notebook.js turns to a pet's page when its bookmark
+           is picked. -->
+      <section id="pets" class="paper-band paper-band--mustard mb-16 sm:mb-24">
+        <div class="container max-w-container py-16 sm:py-20">
+          <div class="mb-10 sm:mb-12" data-reveal>
+            <h2 class="craft-heading craft-heading--marker font-heading text-heading-2">Looking for a home</h2>
+            <p class="text-brand-text/80 text-sm mt-4">A few of the friends waiting to meet you. Pick a bookmark to turn to their page.</p>
+          </div>
+          <div class="pet-notebook" data-reveal>
+            <div id="pet-tabs" class="nb-tabs" role="tablist" aria-label="Animals looking for a home"></div>
+            <div class="nb-cover">
+              <div id="pet-pages" class="nb-pages"></div>
+              <div class="nb-spiral" aria-hidden="true"></div>
             </div>
           </div>
-          <p class="text-sm mt-4 text-brand-text/90">
-            "Buddy loves belly rubs, tennis balls, and greeting everyone like
-            they're his best friend."
-          </p>
-          <a href="#pets" class="mt-4 inline-block w-full text-center py-2 rounded-full text-sm font-semibold bg-brand-secondary text-brand-secondary-contrast hover:brightness-95 transition">
-            Adopt Buddy
-          </a>
         </div>
       </section>
 
-      <!-- Stats -->
-      <section class="container max-w-container pb-16 sm:pb-24" data-reveal>
-        <dl class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
-          <div class="bg-brand-surface rounded-2xl p-5 border border-brand-border">
-            <dt class="sr-only">Animals adopted</dt>
-            <dd class="font-heading text-heading-2 text-brand-secondary">312</dd>
-            <p class="text-xs text-brand-text-muted mt-1">Animals adopted</p>
-          </div>
-          <div class="bg-brand-surface rounded-2xl p-5 border border-brand-border">
-            <dt class="sr-only">Years running</dt>
-            <dd class="font-heading text-heading-2 text-brand-secondary">9</dd>
-            <p class="text-xs text-brand-text-muted mt-1">Years running</p>
-          </div>
-          <div class="bg-brand-surface rounded-2xl p-5 border border-brand-border">
-            <dt class="sr-only">Active volunteers</dt>
-            <dd class="font-heading text-heading-2 text-brand-secondary">48</dd>
-            <p class="text-xs text-brand-text-muted mt-1">Volunteers</p>
-          </div>
-          <div class="bg-brand-surface rounded-2xl p-5 border border-brand-border">
-            <dt class="sr-only">Partner vets</dt>
-            <dd class="font-heading text-heading-2 text-brand-secondary">6</dd>
-            <p class="text-xs text-brand-text-muted mt-1">Partner vets</p>
-          </div>
-        </dl>
-      </section>
-
-      <!-- Featured pets -->
-      <section id="pets" class="container max-w-container pb-16 sm:pb-24">
-        <div class="flex items-end justify-between mb-8" data-reveal>
-          <div>
-            <h2 class="font-heading text-heading-2">Looking for a home</h2>
-            <p class="text-brand-text-muted text-sm mt-1">A few of the friends waiting to meet you.</p>
-          </div>
-        </div>
-        <div id="pets-grid" class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5" data-reveal></div>
-      </section>
-
-      <!-- How it works -->
+      <!-- How it works: three homemade scraps — a sticky note, a sheet torn
+           from a notebook, and a kraft gift tag — joined by hand-drawn arrows -->
       <section id="how-it-works" class="container max-w-container pb-16 sm:pb-24">
-        <h2 class="font-heading text-heading-2 mb-8" data-reveal>How adoption works</h2>
-        <ol class="grid sm:grid-cols-3 gap-5">
-          <li class="bg-brand-surface rounded-3xl p-6 border border-brand-border" data-reveal>
-            <span class="font-heading text-3xl text-brand-primary">1</span>
-            <h3 class="font-heading text-heading-3 mt-1 mb-2">Browse &amp; meet</h3>
-            <p class="text-sm text-brand-text/90">Come by during open hours or book a meet-and-greet with an animal you like.</p>
+        <h2 class="craft-heading craft-heading--marker font-heading text-heading-2 mb-12" data-reveal>How adoption works</h2>
+        <ol class="grid sm:grid-cols-3 gap-10 sm:gap-12">
+          <li class="step" data-reveal>
+            <div class="step-card step-card--sticky rough-paper">
+              <span class="step-doodle step-doodle--browse" aria-hidden="true"></span>
+              <span class="step-number" aria-hidden="true">1</span>
+              <h3 class="font-heading text-heading-3 mt-3 mb-1">Browse &amp; meet</h3>
+              <p class="step-text">Come by during open hours or book a meet-and-greet with an animal you like.</p>
+            </div>
           </li>
-          <li class="bg-brand-surface rounded-3xl p-6 border border-brand-border" data-reveal>
-            <span class="font-heading text-3xl text-brand-primary">2</span>
-            <h3 class="font-heading text-heading-3 mt-1 mb-2">Apply</h3>
-            <p class="text-sm text-brand-text/90">Fill out a short adoption form so we can make sure it's a good match, both ways.</p>
+          <li class="step" data-reveal>
+            <div class="step-card step-card--sheet rough-paper rough-paper--outlined">
+              <div class="craft-tape craft-tape--sage craft-tape--sheet" aria-hidden="true"></div>
+              <span class="step-doodle step-doodle--apply" aria-hidden="true"></span>
+              <span class="step-number" aria-hidden="true">2</span>
+              <h3 class="font-heading text-heading-3 mt-3 mb-1">Apply</h3>
+              <p class="step-text">Fill out a short adoption form so we can make sure it's a good match, both ways.</p>
+            </div>
           </li>
-          <li class="bg-brand-surface rounded-3xl p-6 border border-brand-border" data-reveal>
-            <span class="font-heading text-3xl text-brand-primary">3</span>
-            <h3 class="font-heading text-heading-3 mt-1 mb-2">Bring them home</h3>
-            <p class="text-sm text-brand-text/90">Pay a small adoption fee that covers vaccines and spay/neuter, then head home together.</p>
+          <li class="step" data-reveal>
+            <div class="step-card step-card--tag rough-paper">
+              <span class="step-tag-string" aria-hidden="true"></span>
+              <span class="step-tag-hole" aria-hidden="true"></span>
+              <span class="step-doodle step-doodle--home" aria-hidden="true"></span>
+              <span class="step-number" aria-hidden="true">3</span>
+              <h3 class="font-heading text-heading-3 mt-3 mb-1">Bring them home</h3>
+              <p class="step-text">Pay a small adoption fee that covers vaccines and spay/neuter, then head home together.</p>
+            </div>
           </li>
         </ol>
       </section>
 
-      <!-- About -->
-      <section id="about" class="container max-w-container pb-16 sm:pb-24 grid sm:grid-cols-2 gap-10 items-center">
-        <div class="bg-brand-accent/15 rounded-3xl p-8 border border-brand-border" data-reveal>
-          <p class="font-heading text-3xl text-brand-text">"No animal leaves here without a soft place to land — even if that place is just us, for now."</p>
-        </div>
-        <div data-reveal>
-          <h2 class="font-heading text-heading-2 mb-4">About Furever Home</h2>
-          <p class="text-brand-text/90 mb-4">
-            Furever Home started in a garage with three fosters and a lot of hope.
-            Today we're a small team of volunteers who take in strays, injured
-            animals, and pets whose families could no longer care for them —
-            and get them healthy, comfortable, and ready for a new home.
-          </p>
-          <p class="text-brand-text/90">
-            We rely entirely on adoption fees, donations, and people willing to
-            give an afternoon a week. If that's you, we'd love the help.
-          </p>
+      <!-- About: the shelter's story on a sage torn-paper band, with its
+           motto on a taped-up index card -->
+      <section id="about" class="paper-band paper-band--sage mb-16 sm:mb-24">
+        <div class="container max-w-container py-16 sm:py-20 grid sm:grid-cols-2 gap-12 sm:gap-10 items-center">
+          <div class="craft-note rough-paper p-8" data-reveal>
+            <div class="craft-tape craft-tape--mustard craft-tape--quote" aria-hidden="true"></div>
+            <img class="craft-photo" src="images/about-garage.webp" alt="A volunteer kneeling beside a small dog in a converted garage with crates and folded blankets" width="1152" height="864" loading="lazy" decoding="async">
+            <p class="font-heading text-3xl text-brand-text">"No animal leaves here without a soft place to land — even if that place is just us, for now."</p>
+          </div>
+          <div data-reveal>
+            <h2 class="craft-heading craft-heading--marker font-heading text-heading-2 mb-6">About Furever Home</h2>
+            <p class="text-brand-text/90 mb-4">
+              Furever Home started in a garage with three fosters and a lot of hope.
+              Today we're a small team of volunteers who take in strays, injured
+              animals, and pets whose families could no longer care for them —
+              and get them healthy, comfortable, and ready for a new home.
+            </p>
+            <p class="text-brand-text/90">
+              We rely entirely on adoption fees, donations, and people willing to
+              give an afternoon a week. If that's you, we'd love the help.
+            </p>
+          </div>
         </div>
       </section>
 
       <!-- Get involved -->
       <section id="get-involved" class="container max-w-container pb-16 sm:pb-24">
         <div class="grid sm:grid-cols-2 gap-5">
-          <div class="rounded-3xl p-8 bg-brand-secondary text-brand-secondary-contrast" data-reveal>
-            <h3 class="font-heading text-heading-3 mb-2">Volunteer with us</h3>
+          <div class="craft-poster rough-paper p-8 text-brand-secondary-contrast" data-reveal>
+            <div class="craft-tape craft-tape--mustard craft-tape--poster-tl" aria-hidden="true"></div>
+            <div class="craft-tape craft-tape--mustard craft-tape--poster-br" aria-hidden="true"></div>
+            <h3 class="craft-heading craft-heading--light font-heading text-heading-3 mb-2">Volunteer with us</h3>
             <p class="text-sm mb-5 opacity-90">Walk dogs, socialize cats, help at adoption events, or foster an animal in your own home.</p>
-            <a href="#" class="inline-block px-5 py-2 rounded-full text-sm font-semibold bg-white text-brand-secondary hover:brightness-95 transition">Sign up to volunteer</a>
+            <a href="#" class="sticker">Sign up to volunteer</a>
           </div>
-          <div class="rounded-3xl p-8 bg-brand-primary text-brand-primary-contrast" data-reveal>
-            <h3 class="font-heading text-heading-3 mb-2">Make a donation</h3>
+          <div class="craft-donate rough-paper p-8 text-brand-primary-contrast" data-reveal>
+            <div class="craft-tape craft-tape--donate-tl" aria-hidden="true"></div>
+            <div class="craft-tape craft-tape--donate-br" aria-hidden="true"></div>
+            <div class="craft-slot" aria-hidden="true"></div>
+            <h3 class="craft-heading font-heading text-heading-3 mb-2">Make a donation</h3>
             <p class="text-sm mb-5 opacity-90">Every dollar goes straight to food, vet care, and shelter for animals waiting on a home.</p>
-            <a href="#" class="inline-block px-5 py-2 rounded-full text-sm font-semibold bg-white text-brand-primary-contrast hover:brightness-95 transition">Donate now</a>
+            <a href="#" class="sticker sticker--terracotta sticker--tilt-right">Donate now</a>
           </div>
         </div>
       </section>
 
       <!-- Testimonials -->
       <section class="container max-w-container pb-20 sm:pb-28">
-        <h2 class="font-heading text-heading-2 mb-8" data-reveal>Happy tails</h2>
+        <h2 class="craft-heading craft-heading--marker font-heading text-heading-2 mb-10" data-reveal>Happy tails</h2>
         <div class="grid sm:grid-cols-2 gap-5">
-          <blockquote class="bg-brand-surface rounded-3xl p-6 border border-brand-border" data-reveal>
-            <p class="text-brand-text/90 mb-4">"The team knew every animal by name and personality. We found Milo within a week and the whole process felt warm, not transactional."</p>
-            <footer class="text-sm text-brand-text-muted">— Jordan &amp; Milo</footer>
+          <blockquote class="craft-note craft-note--sage rough-paper rough-paper--outlined p-6" data-reveal>
+            <div class="craft-tape craft-tape--sage craft-tape--note-1" aria-hidden="true"></div>
+            <p class="font-heading text-2xl leading-snug text-brand-text mb-3">"The team knew every animal by name and personality. We found Milo within a week and the whole process felt warm, not transactional."</p>
+            <footer class="testimonial-author text-sm text-brand-text-muted"><img class="testimonial-avatar" src="images/avatar-jordan.webp" alt="" width="256" height="256" loading="lazy" decoding="async">— Jordan &amp; Milo</footer>
           </blockquote>
-          <blockquote class="bg-brand-surface rounded-3xl p-6 border border-brand-border" data-reveal>
-            <p class="text-brand-text/90 mb-4">"Fostering through Furever Home was the easiest way to help without a lifelong commitment — they support you the whole way."</p>
-            <footer class="text-sm text-brand-text-muted">— Priya, foster volunteer</footer>
+          <blockquote class="craft-note craft-note--rose rough-paper rough-paper--outlined p-6" data-reveal>
+            <div class="craft-tape craft-tape--rose craft-tape--note-2" aria-hidden="true"></div>
+            <p class="font-heading text-2xl leading-snug text-brand-text mb-3">"Fostering through Furever Home was the easiest way to help without a lifelong commitment — they support you the whole way."</p>
+            <footer class="testimonial-author text-sm text-brand-text-muted"><img class="testimonial-avatar" src="images/avatar-priya.webp" alt="" width="256" height="256" loading="lazy" decoding="async">— Priya, foster volunteer</footer>
           </blockquote>
         </div>
       </section>

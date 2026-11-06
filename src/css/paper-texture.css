@@ -1,0 +1,36 @@
+/* Rough paper: cards that look cut from real paper instead of web boxes.
+   A .rough-paper card paints its surface — the --surface background
+   layers (texture + colour) — on a ::before layer masked to slightly
+   ragged, hand-cut edges. Being a layer *under* the card, it leaves tape
+   and stickers free to spill past the edge. Cards can reshape it further
+   with --surface-clip (a torn top, gift-tag corners). */
+
+@layer components {
+  .rough-paper {
+    /* Solid middle plus a ragged strip along each side (tiles in tokens.css) */
+    --rough-mask: linear-gradient(#000 0 0) 4px 4px / calc(100% - 8px) calc(100% - 8px) no-repeat,
+      var(--rough-edge-top) 0 0 / 96px 5px repeat-x, var(--rough-edge-bottom) 0 100% / 96px 5px repeat-x,
+      var(--rough-edge-left) 0 0 / 5px 96px repeat-y, var(--rough-edge-right) 100% 0 / 5px 96px repeat-y;
+    position: relative;
+    isolation: isolate;
+  }
+
+  .rough-paper::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    background: var(--surface, #fffaf0);
+    clip-path: var(--surface-clip, none);
+    -webkit-mask: var(--rough-mask);
+    mask: var(--rough-mask);
+    pointer-events: none;
+  }
+
+  /* Light paper on a light background gets a thin flat pencil outline
+     (traced around the whole silhouette, tape included) */
+  .rough-paper--outlined {
+    filter: var(--flat-outline);
+  }
+}

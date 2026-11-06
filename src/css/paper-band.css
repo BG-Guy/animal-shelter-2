@@ -1,0 +1,64 @@
+/* Paper bands: full-width sections laid down like strips of tinted paper,
+   torn along the top and bottom so one section blends into the next
+   instead of stopping at a hard line. The page itself tears off the
+   same way where it lifts to reveal the footer. */
+
+@layer components {
+  .paper-band {
+    --band-color: rgb(var(--color-bg));
+    --tear-height: 14px;
+    position: relative;
+    background: var(--paper-grain), var(--band-color);
+  }
+
+  /* Torn edges hang just outside the band, above and below it, and
+     inherit its colour + grain so they read as the same sheet. */
+  .paper-band::before,
+  .paper-band::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: var(--tear-height);
+    background: inherit;
+    -webkit-mask: var(--torn-edge) 0 0 / 200px 100% repeat-x;
+    mask: var(--torn-edge) 0 0 / 200px 100% repeat-x;
+    pointer-events: none;
+  }
+
+  /* 1px overlap into the band hides any hairline seam */
+  .paper-band::before {
+    bottom: calc(100% - 1px);
+  }
+
+  /* Bottom edge: same tear flipped, shifted so it doesn't mirror the top */
+  .paper-band::after {
+    top: calc(100% - 1px);
+    scale: 1 -1;
+    -webkit-mask-position: 87px 0;
+    mask-position: 87px 0;
+  }
+
+  .paper-band--mustard {
+    --band-color: color-mix(in srgb, rgb(var(--color-primary)) 18%, rgb(var(--color-bg)));
+  }
+
+  .paper-band--sage {
+    --band-color: color-mix(in srgb, rgb(var(--color-accent)) 24%, rgb(var(--color-bg)));
+  }
+
+  /* The bottom of the page tears off over the reveal footer */
+  #page-shell::after {
+    content: "";
+    position: absolute;
+    top: calc(100% - 1px);
+    left: 0;
+    right: 0;
+    height: 16px;
+    background: var(--paper-grain), rgb(var(--color-bg));
+    -webkit-mask: var(--torn-edge) 40px 0 / 200px 100% repeat-x;
+    mask: var(--torn-edge) 40px 0 / 200px 100% repeat-x;
+    scale: 1 -1;
+    pointer-events: none;
+  }
+}

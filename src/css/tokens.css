@@ -20,13 +20,22 @@
   --color-text: 92 64 51;
   --color-text-muted: 138 111 92;
   --color-border: rgba(92, 64, 51, 0.15);
+  /* Deeper terracotta for white text and small marks: the brand
+     terracotta is too light to pass contrast behind white text. */
+  --color-secondary-deep: 184 88 62;
 
-  /* Corkboard pet cards */
-  --color-cork: #c9986a;
-  --color-cork-dark: #b07f4e;
+  /* Kraft paper: stat strip and kraft stickers */
+  --color-kraft: #d9b98c;
+  --color-kraft-dark: #c4a06c;
+
+  /* Leather-brown cover of the pet notebook */
   --color-frame: #6b4226;
   --color-frame-dark: #4a2d19;
-  --color-pin: rgb(var(--color-secondary));
+
+  /* Pet notebook paper: cream page, faint ruled lines, terracotta margin */
+  --color-page: #fffaf0;
+  --color-page-rule: rgba(92, 64, 51, 0.13);
+  --color-page-margin: rgba(224, 122, 95, 0.45);
 
   /* Fonts: hand-written display + soft rounded body */
   --font-heading: "Caveat", cursive;
@@ -41,6 +50,49 @@
   --radius-lg: 1.5rem;
   --radius-full: 999px;
   --shadow-soft: 0 8px 24px -8px rgba(92, 64, 51, 0.25);
+
+  /* Paper textures. --paper-grain is a faint speckle layered under every
+     paper surface; --torn-edge is a mask tile for torn-paper edges
+     (solid at the bottom, ragged at the top). */
+  --paper-grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='g' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.36 0 0 0 0 0.25 0 0 0 0 0.2 0 0 0 0.09 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+  --torn-edge: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 16' preserveAspectRatio='none'%3E%3Cpath d='M0 16V6L8 3 17 1 21 9 25 6 28 9 34 1 38 7 47 2 53 2 62 1 66 4 69 10 78 1 84 1 89 5 98 3 102 10 109 9 114 2 120 6 124 9 128 10 131 10 137 8 146 6 157 10 168 6 175 4 180 4 184 10 191 9 200 6V16Z'/%3E%3C/svg%3E");
+
+  /* Card textures, stacked as background layers on paper surfaces:
+     --texture-speckle  brown print-grain flecks (light paper)
+     --texture-speckle-light  cream flecks (dark surfaces)
+     --texture-mottle   soft cloudy unevenness in a sheet's colour
+     --texture-fiber    long streaks for kraft paper and cardboard */
+  --texture-speckle: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='t' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' seed='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.36 0 0 0 0 0.25 0 0 0 0 0.2 1.6 0 0 0 -0.55'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='discrete' tableValues='0 0 0.22 0.4'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23t)'/%3E%3C/svg%3E");
+  --texture-speckle-light: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='t' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' seed='9' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 0.95 0 0 0 0 0.86 1.6 0 0 0 -0.55'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='discrete' tableValues='0 0 0.18 0.32'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23t)'/%3E%3C/svg%3E");
+  --texture-mottle: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='320'%3E%3Cfilter id='t' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.012' numOctaves='3' seed='8' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.36 0 0 0 0 0.25 0 0 0 0 0.2 0.24 0 0 0 -0.09'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23t)'/%3E%3C/svg%3E");
+  --texture-fiber: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='t' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.008 0.35' numOctaves='2' seed='5' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.29 0 0 0 0 0.18 0 0 0 0 0.1 0.6 0 0 0 -0.28'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23t)'/%3E%3C/svg%3E");
+
+  /* Hand-cut edges: 96px mask tiles, solid on the inside, slightly ragged
+     on the outside, one per side so no two edges match. Composed into a
+     mask by .rough-paper (paper-texture.css). */
+  --rough-edge-top: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='5' viewBox='0 0 96 5'%3E%3Cpath d='M0 5V1.3L6 2.7 11 1.4 17 0.6 23 1.5 29 2.5 31.5 1.4 34.5 0.3 41.5 2 47.5 3.1 52.5 2.1 58.5 2.1 64.5 0 70.5 0.2 73 0.6 76 1.9 81 1 87 2.7 93 0.7 96 1.3V5Z'/%3E%3C/svg%3E");
+  --rough-edge-bottom: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='5' viewBox='0 0 96 5'%3E%3Cpath d='M0 0V2.9L4 2.1 6.5 4.9 10.5 3.6 16.5 3.9 23.5 4.4 28.5 5 34.5 3.5 37 4.7 44 3.4 46.5 3.4 53.5 3.6 56 4.3 58.5 3.1 65.5 4.4 68.5 1.9 72.5 3.2 76.5 1.9 80.5 2.9 84.5 3.2 89.5 4.4 94.5 3.1 96 2.9V0Z'/%3E%3C/svg%3E");
+  --rough-edge-left: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='5' height='96' viewBox='0 0 5 96'%3E%3Cpath d='M5 0H1.7L3 2.5 2.7 9.5 1.6 16.5 3.1 23.5 1.7 28.5 3.1 31 1.9 36 3 40 1.4 47 3.1 50 0.3 52.5 1.7 55 2.1 59 2.6 64 1.2 70 1.8 77 2.6 79.5 0.7 85.5 0.2 90.5 1.7 96H5Z'/%3E%3C/svg%3E");
+  --rough-edge-right: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='5' height='96' viewBox='0 0 5 96'%3E%3Cpath d='M0 0H4L3.2 6 2.4 9 2.3 12 2 16 3.2 21 2.7 26 3.3 32 3.1 36 3.8 40 3.7 44 2.3 46.5 3.3 49 3.5 51.5 3.9 54.5 3.8 58.5 4.4 65.5 3.6 68 3.5 71 1.8 73.5 2.4 80.5 4.7 86.5 1.8 92.5 4 96H0Z'/%3E%3C/svg%3E");
+
+  /* Printed photos: smooth bright-white photo paper with a crisp edge and
+     slightly rounded print corners, so a print reads as its own object
+     lying on the textured cream paper beneath it — no shadow needed.
+     --print-keyline is a hairline where the picture meets the border. */
+  --print-paper: #ffffff;
+  --print-edge: rgba(92, 64, 51, 0.45);
+  --print-radius: 3px;
+  --print-keyline: inset 0 0 0 1px rgba(92, 64, 51, 0.16);
+
+  /* A thin flat pencil outline traced around an element's silhouette
+     (four hard, unblurred 1px offsets — a line, not a shadow) */
+  --flat-outline: drop-shadow(1px 0 0 rgba(92, 64, 51, 0.32)) drop-shadow(-1px 0 0 rgba(92, 64, 51, 0.32))
+    drop-shadow(0 1px 0 rgba(92, 64, 51, 0.32)) drop-shadow(0 -1px 0 rgba(92, 64, 51, 0.32));
+
+  /* Motion: a soft settle for reveals, a slight overshoot for things
+     that get "slapped on" (tape, stickers, pins). */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-pop: cubic-bezier(0.34, 1.56, 0.64, 1);
 
   /* Layout */
   --container-max: 72rem;

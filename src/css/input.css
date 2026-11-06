@@ -1,6 +1,15 @@
 @import "./tokens.css";
 @import "./base.css";
 @import "./components.css";
+@import "./paper-texture.css";
+@import "./sticker.css";
+@import "./paper-band.css";
+@import "./polaroid.css";
+@import "./stat-strip.css";
+@import "./step-cards.css";
+@import "./pet-notebook.css";
+/* Last, so scroll choreography can layer over every component above */
+@import "./motion.css";
 
 @tailwind base;
 @tailwind components;
@@ -11,6 +20,6 @@
     transition: transform 0.2s ease;
   }
   .wag:hover {
-    transform: rotate(-2deg) scale(1.02);
+    transform: scale(1.02);
   }
 }

@@ -1,0 +1,136 @@
+/* Sticker buttons: every call-to-action on the home page is a flat,
+   die-cut sticker slapped onto the scrapbook — a solid colour face, a
+   white cut-line edge, a thin pencil outline, and one corner peeled up.
+   Hover straightens it and peels the corner further; pressing sticks it
+   back down flat. No shadows or shine: everything is flat colour. */
+
+@layer components {
+  /* The element itself carries the label, tilt, and outline. The sticker
+     face lives on ::before and the peeled-back corner on ::after, so the
+     outline filter traces the real cut-out silhouette, flap included. */
+  .sticker {
+    --sticker-fill: rgb(var(--color-primary));
+    --sticker-ink: rgb(var(--color-primary-contrast));
+    --sticker-tilt: -2deg;
+    --sticker-radius: 0.3em;
+    --sticker-peel: 0.6em;
+    position: relative;
+    isolation: isolate;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.35em;
+    padding: 0.35em 1.05em 0.4em;
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    line-height: 1.1;
+    color: var(--sticker-ink);
+    cursor: pointer;
+    rotate: var(--sticker-tilt);
+    filter: var(--flat-outline);
+    transition: rotate 0.25s var(--ease-out), translate 0.25s var(--ease-out), scale 0.15s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Face: flat colour inside a white die-cut border. The clip-path folds
+     away the bottom-right corner by --sticker-peel. */
+  .sticker::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border: 3px solid #fff;
+    border-radius: var(--sticker-radius);
+    background: var(--sticker-fill);
+    clip-path: polygon(
+      0 0,
+      100% 0,
+      100% calc(100% - var(--sticker-peel)),
+      calc(100% - var(--sticker-peel)) 100%,
+      0 100%
+    );
+    transition: clip-path 0.3s var(--ease-out);
+  }
+
+  /* Peeled corner: the folded-back flap, in the sticker's flat pale backing */
+  .sticker::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+    width: var(--sticker-peel);
+    height: var(--sticker-peel);
+    border-top-left-radius: var(--sticker-radius);
+    background: linear-gradient(to bottom right, #ede5d7 50%, transparent 50%);
+    transition: width 0.3s var(--ease-out), height 0.3s var(--ease-out);
+  }
+
+  /* Arrow inside a label nudges forward on hover */
+  .sticker-arrow {
+    display: inline-block;
+    transition: translate 0.25s var(--ease-out);
+  }
+
+  /* Hover (real pointers only, so taps don't leave stickers stuck "lifted"):
+     straighten up, rise a touch, and peel the corner further */
+  @media (hover: hover) {
+    .sticker:hover {
+      --sticker-peel: 1em;
+      rotate: calc(var(--sticker-tilt) * 0.3);
+      translate: 0 -2px;
+    }
+
+    .sticker:hover .sticker-arrow {
+      translate: 0.2em 0;
+    }
+  }
+
+  /* Press: stuck flat to the page, corner and all */
+  .sticker:active {
+    --sticker-peel: 0px;
+    translate: 0 1px;
+    scale: 0.97;
+  }
+
+  .sticker:focus-visible {
+    outline: 3px solid rgb(var(--color-text));
+    outline-offset: 5px;
+  }
+
+  /* Colour variants. Terracotta uses the deeper shade so white text
+     clears WCAG AA contrast. */
+  .sticker--terracotta {
+    --sticker-fill: rgb(var(--color-secondary-deep));
+    --sticker-ink: #fff;
+  }
+
+  .sticker--kraft {
+    --sticker-fill: var(--color-kraft);
+    --sticker-ink: rgb(var(--color-primary-contrast));
+  }
+
+  /* Size, layout, and tilt variants */
+  .sticker--lg {
+    font-size: 1.75rem;
+  }
+
+  .sticker--block {
+    --sticker-tilt: -1deg;
+    display: flex;
+    width: 100%;
+  }
+
+  .sticker--tilt-right {
+    --sticker-tilt: 1.75deg;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sticker,
+    .sticker::before,
+    .sticker::after,
+    .sticker-arrow {
+      transition: none;
+    }
+  }
+}
